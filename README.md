@@ -15,10 +15,10 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本 Repository 專門服務 OpenCode 開發流程，主要使用 OpenCode 原生機制：
 
 ```text
-AGENTS.md                 專案共用規則
-.opencode/skills/         專案限定 Skills
+AGENTS.md                  專案共用規則
+.opencode/skills/          專案限定 Skills
 ~/.config/opencode/skills/ 全域共用 Skills
-opencode.jsonc            OpenCode 設定與權限
+opencode.jsonc             OpenCode 設定與權限
 ```
 
 不會自動建立或安裝 Claude Code Plugin、Codex Plugin、Cursor Rules、跨 Agent Hook 或模式狀態管理。
@@ -32,6 +32,7 @@ opencode.jsonc            OpenCode 設定與權限
 - 不把 Windows、Linux 與 macOS 拆成多套不同 Harness。
 - 危險 Git 操作、push 與破壞性檔案操作必須先詢問。
 - 不在 Repository 或設定範本中保存 Token、密碼或內部 URL。
+- 沒有本次修改後的新驗證證據，不宣稱工作已完成、修復或通過。
 
 ## 目前包含的 Skills
 
@@ -41,7 +42,7 @@ opencode.jsonc            OpenCode 設定與權限
 | `config-check` | 檢查全域與專案域 OpenCode 設定 |
 | `project-init` | 建立最小且通用的 OpenCode 專案結構 |
 | `session-start` | 開始工作前讀取規則、交接與 Git 狀態 |
-| `session-close` | 整理本次工作、更新交接並準備 Git 變更 |
+| `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
 | `git-basic` | 統一安全且可理解的本地 Git 操作 |
 
 ## Repository 結構
@@ -94,8 +95,11 @@ C:\Users\<user>\.config\opencode\skills\
 - 實際 Build、Lint、Test 指令
 - SWQA 所需的測試、Log、Verdict、Timeout／Retry 與硬體限制
 - 危險或不可回復操作的確認規則
+- 完成前必須保存的命令、exit code、測試結果與 Artifact 證據
 
-詳細的精簡程式碼審查放在 `opencode-extension-packs` 的 `lean-code-review` Skill，只有明確要求審查時才載入。
+`handoff.md` 用於保存目前 Session 狀態與驗證證據。對 Python、UART／TTY 或封包測試，應在適用時記錄 DUT／firmware、Console Log、PCAP 與正式報告路徑；摘要不能取代原始證據。
+
+需求釐清、測試失敗分析與精簡程式碼審查等按需能力放在 `opencode-extension-packs`，不增加 Core 的常駐負擔。
 
 ## 使用情境
 
