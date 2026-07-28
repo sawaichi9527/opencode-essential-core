@@ -29,6 +29,14 @@
 
 No Ponytail plugin runtime, lifecycle hooks, mode state, benchmark suite, or cross-agent adapters are included.
 
+### `obra/superpowers`
+
+- License: MIT
+- Concept selectively adapted:
+  - do not claim completion without fresh verification evidence.
+
+Only the evidence-before-claims principle is incorporated into the existing `AGENTS.md`, `session-close`, and `handoff.md` workflow. The Superpowers plugin, bootstrap injection, automatic skill invocation, worktree, subagent, and mandatory TDD workflows are not included.
+
 ## Adaptation direction
 
 This repository is not a direct mirror. It reorganizes selected concepts into a smaller,
@@ -44,6 +52,7 @@ Initial changes include:
 - keep Git hosting integrations outside the core;
 - retain Traditional Chinese as the primary documentation language;
 - keep always-on coding guidance in the project `AGENTS.md` rather than an additional plugin or hook;
+- record fresh verification evidence in the existing session close and handoff flow;
 - use only OpenCode-native project rules, Skills, configuration, and permissions.
 
 Future upstream changes should be reviewed and selectively adapted rather than merged automatically.
