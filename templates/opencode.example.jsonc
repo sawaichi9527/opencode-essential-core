@@ -1,0 +1,31 @@
+{
+  // Copy only the required sections into your own opencode.jsonc.
+  // Do not place secrets directly in this file.
+  "permission": {
+    "skill": {
+      "environment-check": "allow",
+      "config-check": "allow",
+      "project-init": "allow",
+      "session-start": "allow",
+      "session-close": "allow",
+      "git-basic": "allow",
+      "*": "ask"
+    },
+    "bash": {
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "git branch*": "allow",
+      "git fetch*": "allow",
+      "git add*": "ask",
+      "git commit*": "ask",
+      "git pull*": "ask",
+      "git push*": "ask",
+      "git reset --hard*": "deny",
+      "git clean -fd*": "deny",
+      "rm -rf*": "deny",
+      "Remove-Item *-Recurse*": "deny",
+      "*": "ask"
+    }
+  }
+}
