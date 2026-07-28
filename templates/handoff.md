@@ -17,9 +17,19 @@ Not started.
 - Confirm project scope.
 - Add the first implementation task.
 
-## Validation result
+## Validation evidence
 
-Not run.
+- Command: Not run.
+- Execution time: N/A
+- Exit code: N/A
+- Result: Not verified.
+- Passed / Failed / Skipped: N/A
+- Test environment: N/A
+- DUT / firmware version: N/A
+- UART / console log: N/A
+- PCAP / packet evidence: N/A
+- Test report: N/A
+- Remaining unverified scope: All planned work.
 
 ## Known issues
 
