@@ -3,8 +3,11 @@
 ## 0.1.1 - Fresh validation evidence
 
 - Required fresh verification evidence before completion or passing claims.
-- Expanded `handoff.md` with command, exit code, result, environment, DUT, UART, PCAP, report, and unverified-scope fields.
-- Strengthened `session-close` to run or explicitly defer relevant verification and preserve original test artifacts.
+- Expanded `handoff.md` with command, execution timestamp, duration, exit code, result, environment, DUT, UART, PCAP, report, and unverified-scope fields.
+- Strengthened `session-close` to select existing project verification before inventing commands, and to distinguish document checks from Runtime or DUT validation.
+- Moved project templates into `project-init/references/` so they remain available after Skill installation.
+- Added installed-reference checks to PowerShell and Bash validation scripts.
+- Extended `config-check` to inspect global and project Commands, shadowing, frontmatter, and referenced Agents.
 - Adapted the evidence-before-claims principle without importing the Superpowers plugin or workflow framework.
 
 ## 0.1.0 - Initial planning baseline
