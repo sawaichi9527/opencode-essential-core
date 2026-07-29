@@ -6,8 +6,8 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：初始轉化版本（v0.1 planning baseline）。內容源自
-> `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改原則，
+> 狀態：v0.1.1 小型團隊基準。內容源自
+> `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 但只保留適合 OpenCode 小型團隊使用的部分。
 
 ## OpenCode 使用邊界
@@ -15,10 +15,12 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本 Repository 專門服務 OpenCode 開發流程，主要使用 OpenCode 原生機制：
 
 ```text
-AGENTS.md                 專案共用規則
-.opencode/skills/         專案限定 Skills
-~/.config/opencode/skills/ 全域共用 Skills
-opencode.jsonc            OpenCode 設定與權限
+AGENTS.md                    專案共用規則
+.opencode/skills/            專案限定 Skills
+~/.config/opencode/skills/   全域共用 Skills
+.opencode/commands/          專案限定 Commands
+~/.config/opencode/commands/ 全域共用 Commands
+opencode.jsonc               OpenCode 設定與權限
 ```
 
 不會自動建立或安裝 Claude Code Plugin、Codex Plugin、Cursor Rules、跨 Agent Hook 或模式狀態管理。
@@ -31,17 +33,18 @@ opencode.jsonc            OpenCode 設定與權限
 - 不在 Core 內綁定 GitHub、Forgejo、NotebookLM、Supabase 或其他特定服務。
 - 不把 Windows、Linux 與 macOS 拆成多套不同 Harness。
 - 危險 Git 操作、push 與破壞性檔案操作必須先詢問。
-- 不在 Repository 或設定範本中保存 Token、密碼或內部 URL。
+- 不在 Repository、設定、Skill 或 Command 範本中保存 Token、密碼或內部 URL。
+- 沒有本次修改後的新驗證證據，不宣稱工作已完成、修復或通過。
 
 ## 目前包含的 Skills
 
 | Skill | 中文用途 |
 |---|---|
 | `environment-check` | 檢查 OpenCode、Git、Node.js、Python/uv 與執行平台 |
-| `config-check` | 檢查全域與專案域 OpenCode 設定 |
-| `project-init` | 建立最小且通用的 OpenCode 專案結構 |
+| `config-check` | 檢查全域與專案域 OpenCode 設定、Skills、Commands 與路徑覆蓋 |
+| `project-init` | 使用隨 Skill 安裝的 Reference 建立最小 OpenCode 專案結構 |
 | `session-start` | 開始工作前讀取規則、交接與 Git 狀態 |
-| `session-close` | 整理本次工作、更新交接並準備 Git 變更 |
+| `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
 | `git-basic` | 統一安全且可理解的本地 Git 操作 |
 
 ## Repository 結構
@@ -49,11 +52,14 @@ opencode.jsonc            OpenCode 設定與權限
 ```text
 opencode-essential-core/
 ├── skills/
-├── templates/
+│   └── project-init/
+│       └── references/
 ├── scripts/
 ├── examples/
 └── docs/
 ```
+
+`AGENTS.md` 與 `handoff.md` 範本放在 `project-init/references/`，因此安裝單一 Skill 後仍可使用，不依賴原始 Clone 的 Repository 根目錄。
 
 ## 安裝
 
@@ -83,19 +89,24 @@ Windows 對應：
 C:\Users\<user>\.config\opencode\skills\
 ```
 
-安裝腳本只複製此 Repository 的 `skills/`，不會自動修改既有 `opencode.jsonc`。
+安裝腳本複製此 Repository 的完整 Skill 目錄，包含 `project-init/references/`，但不會自動修改既有 `opencode.jsonc` 或安裝 Extension Commands。檢查腳本會確認六個 Core Skills 與兩個 Project Init Reference 是否存在。
 
 ## OpenCode 專案規則
 
-新專案透過 `project-init` 建立 `AGENTS.md`。這份檔案應只放 OpenCode 每次工作都需要知道的內容：
+新專案透過 `project-init` 建立 `AGENTS.md` 與 `handoff.md`。這些檔案應只放 OpenCode 每次工作都需要知道的內容：
 
 - 專案目的與邊界
 - 小幅且可審查的修改原則
 - 實際 Build、Lint、Test 指令
 - SWQA 所需的測試、Log、Verdict、Timeout／Retry 與硬體限制
 - 危險或不可回復操作的確認規則
+- 完成前必須保存的命令、exit code、測試結果與 Artifact 證據
 
-詳細的精簡程式碼審查放在 `opencode-extension-packs` 的 `lean-code-review` Skill，只有明確要求審查時才載入。
+`handoff.md` 用於保存目前 Session 狀態與驗證證據。對 Python、UART／TTY 或封包測試，應在適用時記錄 DUT／firmware、Console Log、PCAP 與正式報告路徑；摘要不能取代原始證據。
+
+`config-check` 也會檢查全域與專案的 Commands，提示同名覆蓋、無效 frontmatter 或不存在的 Agent，但不會自行刪除或覆寫設定。
+
+需求釐清、測試失敗分析與精簡程式碼審查等按需能力放在 `opencode-extension-packs`，不增加 Core 的常駐負擔。
 
 ## 使用情境
 

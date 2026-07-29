@@ -23,5 +23,20 @@ foreach ($Name in $Expected) {
     }
 }
 
+$ProjectInitReferences = @(
+    "AGENTS.template.md",
+    "handoff.template.md"
+)
+$ReferenceDir = Join-Path (Join-Path $TargetDir "project-init") "references"
+foreach ($Reference in $ProjectInitReferences) {
+    $ReferencePath = Join-Path $ReferenceDir $Reference
+    if (Test-Path $ReferencePath) {
+        Write-Host "[OK] project-init/references/$Reference"
+    } else {
+        Write-Host "[MISSING] project-init/references/$Reference"
+        $Failed = $true
+    }
+}
+
 if ($Failed) { exit 1 }
 Write-Host "Essential Core validation passed."

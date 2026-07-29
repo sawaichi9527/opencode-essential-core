@@ -34,6 +34,11 @@ ruff check .
 python scripts/smoke_test.py
 ```
 
+- Do not claim that work is complete, fixed, or passing without fresh verification evidence from the current change.
+- Record the exact command, exit code, pass/fail/skip count or observed result, test environment or DUT version, relevant log/report/PCAP paths, and any unverified scope.
+- Read the complete failure output needed for diagnosis; do not rely only on the last error line or a previous run.
+- Ask before destructive, stress, long-running, hardware-affecting, or production-like verification. If it is not run, state that clearly instead of assuming success.
+
 ## Project-specific notes
 
 Add project constraints, naming rules, supported platforms, fixtures, timeout/retry rules, log/verdict rules, and known limitations here.
