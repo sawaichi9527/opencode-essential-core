@@ -27,11 +27,28 @@ project/
 
 SWQA 專用的 `reports/`、`logs/`、`test-data/` 應由 Extension Pack 建立，不寫死在 Core。
 
+## 內建範本
+
+本 Skill 安裝後應同時包含：
+
+```text
+skills/project-init/
+├── SKILL.md
+└── references/
+    ├── AGENTS.template.md
+    └── handoff.template.md
+```
+
+- 若沒有 `AGENTS.md`，使用本 Skill 相對路徑 `references/AGENTS.template.md` 作為起點。
+- 若沒有 `handoff.md`，使用本 Skill 相對路徑 `references/handoff.template.md` 作為起點。
+- 不依賴 Repository 根目錄或安裝後不存在的外部 Template 路徑。
+- 建立前先顯示預計產生的檔案；只有使用者同意後才寫入。
+
 ## OpenCode 專案規則
 
-- 若沒有 `AGENTS.md`，使用 Essential Core 的 `templates/AGENTS.md` 作為起點。
 - `AGENTS.md` 是本專案給 OpenCode 的共用規則，應跟著專案提交到 Git。
 - 只保留專案目的、工作規則、驗證指令與必要限制，避免把長篇教學或所有文件塞入其中。
+- 依實際專案替換範本中的 Purpose、Validation 與 Project-specific notes，不保留無關範例。
 - 除非使用者明確要求，不建立 `CLAUDE.md`、Cursor Rules、Codex Plugin、Hook 或其他 Agent 專用設定。
 
 ## Git
