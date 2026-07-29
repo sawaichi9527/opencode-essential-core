@@ -21,6 +21,19 @@ for name in "${expected[@]}"; do
   fi
 done
 
+project_init_references=(
+  AGENTS.template.md
+  handoff.template.md
+)
+for reference in "${project_init_references[@]}"; do
+  if [[ -f "$TARGET_DIR/project-init/references/$reference" ]]; then
+    echo "[OK] project-init/references/$reference"
+  else
+    echo "[MISSING] project-init/references/$reference"
+    failed=1
+  fi
+done
+
 if [[ "$failed" -ne 0 ]]; then
   exit 1
 fi
