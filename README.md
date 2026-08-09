@@ -1,12 +1,12 @@
 # OpenCode Essential Core
 
 OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、WSL、Ubuntu 與 macOS 上，
-對環境檢查、專案初始化、工作階段交接與 Git 基本操作採用一致做法。
+對環境檢查、專案初始化、工作階段交接、Git 基本操作與團隊基準更新採用一致做法。
 
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.1.1 小型團隊基準。內容源自
+> 狀態：v0.0.1 第一個版本化基準。內容源自
 > `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 但只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -18,8 +18,8 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 AGENTS.md                    專案共用規則
 .opencode/skills/            專案限定 Skills
 ~/.config/opencode/skills/   全域共用 Skills
-.opencode/commands/          專案限定 Commands
-~/.config/opencode/commands/ 全域共用 Commands
+.opencode/command/           專案限定 Commands
+~/.config/opencode/command/  全域共用 Commands
 opencode.jsonc               OpenCode 設定與權限
 ```
 
@@ -35,6 +35,7 @@ opencode.jsonc               OpenCode 設定與權限
 - 危險 Git 操作、push 與破壞性檔案操作必須先詢問。
 - 不在 Repository、設定、Skill 或 Command 範本中保存 Token、密碼或內部 URL。
 - 沒有本次修改後的新驗證證據，不宣稱工作已完成、修復或通過。
+- 團隊基準更新只在使用者明確執行 `/teamwork-update-check` 後檢查，不建立背景排程或自動覆蓋。
 
 ## 目前包含的 Skills
 
@@ -46,12 +47,28 @@ opencode.jsonc               OpenCode 設定與權限
 | `session-start` | 開始工作前讀取規則、交接與 Git 狀態 |
 | `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
 | `git-basic` | 統一安全且可理解的本地 Git 操作 |
+| `teamwork-update-check` | 手動比對團隊 Core 與 Extension Packs repository 的版本與變更，套用前詢問使用者 |
+
+## Commands
+
+Core 也提供一個手動 command：
+
+```text
+/teamwork-update-check
+```
+
+它會讀取 `sawaichi9527/opencode-essential-core` 與 `sawaichi9527/opencode-extension-packs`，
+比對本機安裝基準與遠端版本、manifest、CHANGELOG、Skills、Commands、Packs 及相容性要求。
+它不會由 `session-start` 自動觸發，也不會在未獲得確認前修改本機設定或安裝套件。
 
 ## Repository 結構
 
 ```text
 opencode-essential-core/
+├── command/
+│   └── teamwork-update-check.md
 ├── skills/
+│   ├── teamwork-update-check/
 │   └── project-init/
 │       └── references/
 ├── scripts/
@@ -81,15 +98,17 @@ bash ./scripts/check.sh
 
 ```text
 ~/.config/opencode/skills/
+~/.config/opencode/command/
 ```
 
 Windows 對應：
 
 ```text
 C:\Users\<user>\.config\opencode\skills\
+C:\Users\<user>\.config\opencode\command\
 ```
 
-安裝腳本複製此 Repository 的完整 Skill 目錄，包含 `project-init/references/`，但不會自動修改既有 `opencode.jsonc` 或安裝 Extension Commands。檢查腳本會確認六個 Core Skills 與兩個 Project Init Reference 是否存在。
+安裝腳本複製七個 Core Skills 與 Core command，但不會自動修改既有 `opencode.jsonc`，也不會安裝 Extension Packs 或第三方 plugin。檢查腳本會確認七個 Core Skills、`teamwork-update-check` command 與兩個 Project Init Reference 存在。
 
 ## OpenCode 專案規則
 
@@ -98,13 +117,15 @@ C:\Users\<user>\.config\opencode\skills\
 - 專案目的與邊界
 - 小幅且可審查的修改原則
 - 實際 Build、Lint、Test 指令
-- SWQA 所需的測試、Log、Verdict、Timeout／Retry 與硬體限制
+- SWQA 所需的測試、Log、Verdict、Timeout/Retry 與硬體限制
 - 危險或不可回復操作的確認規則
 - 完成前必須保存的命令、exit code、測試結果與 Artifact 證據
 
-`handoff.md` 用於保存目前 Session 狀態與驗證證據。對 Python、UART／TTY 或封包測試，應在適用時記錄 DUT／firmware、Console Log、PCAP 與正式報告路徑；摘要不能取代原始證據。
+`handoff.md` 用於保存目前 Session 狀態與驗證證據。對 Python、UART/TTY 或封包測試，應在適用時記錄 DUT/firmware、Console Log、PCAP 與正式報告路徑；摘要不能取代原始證據。
 
 `config-check` 也會檢查全域與專案的 Commands，提示同名覆蓋、無效 frontmatter 或不存在的 Agent，但不會自行刪除或覆寫設定。
+
+`teamwork-update-check` 只在使用者明確要求時讀取團隊兩個 repository，並在任何套用動作前顯示差異與取得確認。
 
 需求釐清、測試失敗分析與精簡程式碼審查等按需能力放在 `opencode-extension-packs`，不增加 Core 的常駐負擔。
 
@@ -121,6 +142,8 @@ C:\Users\<user>\.config\opencode\skills\
 ```text
 sawaichi9527/opencode-extension-packs
 ```
+
+Extension Packs 使用 manifest 分成 Default、Recommended 與 Optional。Core 不會自動安裝其中的第三方 plugin；使用者可透過 `/teamwork-update-check` 取得版本與差異資訊，再自行選擇套用。
 
 ## 授權與來源
 
