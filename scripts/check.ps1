@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
-    [string]$TargetDir = (Join-Path $HOME ".config\opencode\skills")
+    [string]$TargetDir = (Join-Path $HOME ".config\opencode\skills"),
+    [string]$CommandTargetDir = (Join-Path $HOME ".config\opencode\command")
 )
 
 $Expected = @(
@@ -9,7 +10,8 @@ $Expected = @(
     "project-init",
     "session-start",
     "session-close",
-    "git-basic"
+    "git-basic",
+    "teamwork-update-check"
 )
 
 $Failed = $false
@@ -21,6 +23,14 @@ foreach ($Name in $Expected) {
         Write-Host "[MISSING] $Name"
         $Failed = $true
     }
+}
+
+$CommandFile = Join-Path $CommandTargetDir "teamwork-update-check.md"
+if (Test-Path $CommandFile) {
+    Write-Host "[OK] command/teamwork-update-check.md"
+} else {
+    Write-Host "[MISSING] command/teamwork-update-check.md"
+    $Failed = $true
 }
 
 $ProjectInitReferences = @(
