@@ -2,6 +2,7 @@
 set -euo pipefail
 
 TARGET_DIR="${1:-$HOME/.config/opencode/skills}"
+COMMAND_TARGET_DIR="${2:-$HOME/.config/opencode/command}"
 expected=(
   environment-check
   config-check
@@ -9,6 +10,7 @@ expected=(
   session-start
   session-close
   git-basic
+  teamwork-update-check
 )
 
 failed=0
@@ -20,6 +22,13 @@ for name in "${expected[@]}"; do
     failed=1
   fi
 done
+
+if [[ -f "$COMMAND_TARGET_DIR/teamwork-update-check.md" ]]; then
+  echo "[OK] command/teamwork-update-check.md"
+else
+  echo "[MISSING] command/teamwork-update-check.md"
+  failed=1
+fi
 
 project_init_references=(
   AGENTS.template.md
