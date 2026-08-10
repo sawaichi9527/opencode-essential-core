@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 - Extension workflow compatibility
+
+- Synchronized the Core version with the current maintenance baseline.
+- Clarified that Extension Packs use `default`, `recommended`, and `optional` as installation tiers.
+- Added guidance for displaying `category: other` without treating it as a new tier.
+- Documented `hybrid-workflow` profiles, including generic local, team 28500 aeon, and cloud cheap Builder backends.
+- Updated the teamwork baseline example to Core `0.2.0` and Extension Packs `0.2.1`.
+
 ## 0.1.1 - Fresh validation evidence
 
 - Required fresh verification evidence before completion or passing claims.

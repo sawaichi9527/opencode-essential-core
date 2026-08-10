@@ -6,7 +6,7 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.0.1 第一個版本化基準。內容源自
+> 狀態：v0.2.0。內容源自
 > `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 但只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -60,6 +60,10 @@ Core 也提供一個手動 command：
 它會讀取 `sawaichi9527/opencode-essential-core` 與 `sawaichi9527/opencode-extension-packs`，
 比對本機安裝基準與遠端版本、manifest、CHANGELOG、Skills、Commands、Packs 及相容性要求。
 它不會由 `session-start` 自動觸發，也不會在未獲得確認前修改本機設定或安裝套件。
+
+Extension Packs 的 `hybrid-workflow` 屬於 `category: other` 的 workflow，包含泛用
+`workflow_local_builder`、team 28500 專用的 `workflow_local_builder_aeon`，以及導入時選擇雲端模型的
+`workflow_cloud_cheap_builder`。Core 只列出並檢查這些資訊，不依賴任何特定 provider、GPU 或 Extension Pack。
 
 ## Repository 結構
 

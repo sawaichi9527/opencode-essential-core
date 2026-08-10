@@ -25,14 +25,16 @@ description: 手動檢查 sawaichi9527 的 OpenCode Core 與 Extension Packs 更
    - 專案 `.opencode/skills/` 與 `.opencode/command/`
 3. 若沒有安裝基準：
    - 明確標示目前是未建立 baseline。
-   - 依 Extension Packs manifest 列出 `default`、`recommended`、`optional` 三層 Pack。
+    - 依 Extension Packs manifest 列出 `default`、`recommended`、`optional` 三層 Pack。
+    - 另外顯示 Pack 的 `category`；`category: other` 不視為新的 tier。
    - 將 `defaultPacks` 標為建議預選，但仍在任何安裝前詢問使用者。
    - 對 `recommended` 與 `optional` 不預選，只等待使用者主動選擇。
 4. 若已有 baseline，先比對版本與 commit，再找出上次 baseline 之後的變更。
 5. 比對：
    - repository 版本與 commit
    - 新增、修改、移除的 Skill 與 Command
-   - Extension Pack 的 tier、依賴、來源與版本
+    - Extension Pack 的 tier、依賴、來源與版本
+    - Extension Pack 的 category、workflow profiles、audience 與 model selection 要求
    - OpenCode、Node.js、npm 或外部套件相容性要求
    - CHANGELOG 所描述的行為、設定與安裝流程變更
 6. 以 `ADDED / CHANGED / REMOVED / COMPATIBILITY / LOCAL CONFLICT` 分類輸出摘要。
@@ -57,12 +59,12 @@ description: 手動檢查 sawaichi9527 的 OpenCode Core 與 Extension Packs 更
   "schemaVersion": 1,
   "core": {
     "source": "https://github.com/sawaichi9527/opencode-essential-core",
-    "version": "0.0.1",
+    "version": "0.2.0",
     "commit": "<verified commit>"
   },
   "extensionPacks": {
     "source": "https://github.com/sawaichi9527/opencode-extension-packs",
-    "version": "0.0.1",
+    "version": "0.2.1",
     "commit": "<verified commit>",
     "selected": []
   }
