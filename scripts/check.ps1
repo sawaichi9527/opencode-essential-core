@@ -11,6 +11,7 @@ $Expected = @(
     "session-start",
     "session-close",
     "git-basic",
+    "workspace-layout",
     "teamwork-update-check"
 )
 

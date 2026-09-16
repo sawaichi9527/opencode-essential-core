@@ -5,7 +5,7 @@
 - OpenCode 環境與設定檢查
 - Project Init
 - Session Start / Close
-- Git 基本安全習慣
+- Git 基本安全習慣（含多 repo workspace 的邊界：讀可跨、寫單一 repo）
 - 通用範本
 - 跨平台安裝與驗證
 

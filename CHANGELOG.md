@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.3 - Multi-repo workspace boundary
+
+- Added the `workspace-layout` Skill: keeps repo boundaries in a multi-repo workspace (reads cross-repo, writes single-repo, no staging across repositories).
+- It defers git command permission tiers to `git-basic` and fills the single-repo assumption in `session-start` and `session-close`.
+- Registered the component in `manifest/skills.json` and added it to the expected list in `scripts/check.ps1` and `scripts/check.sh`.
+- Extended `docs/STRUCTURE.md` so the "Git 基本安全習慣" scope covers multi-repo boundaries.
+- Updated the README status marker and the Skills table to `v0.2.3`.
+
 ## 0.2.2 - Update-check query manifest and upgrade flow
 
 - Added `manifest/skills.json` as the machine-readable Core component manifest for previously installed users.
