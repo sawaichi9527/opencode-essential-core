@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.4 - /instruction command
+
+- Added the `/instruction` command as the companion of the `workspace-layout` Skill, so installing that Skill also installs the command.
+- It reports which instruction files OpenCode actually loads under the real rules (project `AGENTS.md` upward search stops at the worktree; `instructions` entries are additive and never shadowed) and names the effective worktree.
+- When the workspace layer is not loaded it shows the exact `instructions` block for `~/.config/opencode/opencode.jsonc`, and writes only after confirmation.
+- Registered the command in `manifest/skills.json` and added it to the expected list in `scripts/check.ps1` and `scripts/check.sh`.
+- Documented the loading rules in the `workspace-layout` Skill.
+- Updated the README status marker and the Commands section to `v0.2.4`.
+
 ## 0.2.3 - Multi-repo workspace boundary
 
 - Added the `workspace-layout` Skill: keeps repo boundaries in a multi-repo workspace (reads cross-repo, writes single-repo, no staging across repositories).

@@ -24,12 +24,18 @@ for name in "${expected[@]}"; do
   fi
 done
 
-if [[ -f "$COMMAND_TARGET_DIR/teamwork-update-check.md" ]]; then
-  echo "[OK] command/teamwork-update-check.md"
-else
-  echo "[MISSING] command/teamwork-update-check.md"
-  failed=1
-fi
+command_files=(
+  teamwork-update-check.md
+  instruction.md
+)
+for command_file in "${command_files[@]}"; do
+  if [[ -f "$COMMAND_TARGET_DIR/$command_file" ]]; then
+    echo "[OK] command/$command_file"
+  else
+    echo "[MISSING] command/$command_file"
+    failed=1
+  fi
+done
 
 project_init_references=(
   AGENTS.template.md

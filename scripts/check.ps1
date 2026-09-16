@@ -26,12 +26,18 @@ foreach ($Name in $Expected) {
     }
 }
 
-$CommandFile = Join-Path $CommandTargetDir "teamwork-update-check.md"
-if (Test-Path $CommandFile) {
-    Write-Host "[OK] command/teamwork-update-check.md"
-} else {
-    Write-Host "[MISSING] command/teamwork-update-check.md"
-    $Failed = $true
+$CommandFiles = @(
+    "teamwork-update-check.md",
+    "instruction.md"
+)
+foreach ($CommandName in $CommandFiles) {
+    $CommandFile = Join-Path $CommandTargetDir $CommandName
+    if (Test-Path $CommandFile) {
+        Write-Host "[OK] command/$CommandName"
+    } else {
+        Write-Host "[MISSING] command/$CommandName"
+        $Failed = $true
+    }
 }
 
 $ProjectInitReferences = @(
