@@ -6,7 +6,7 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.2.4。內容源自
+> 狀態：v0.2.5。內容源自
 > `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 但只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -47,7 +47,7 @@ opencode.jsonc               OpenCode 設定與權限
 | `session-start` | 開始工作前讀取規則、交接與 Git 狀態 |
 | `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
 | `git-basic` | 統一安全且可理解的本地 Git 操作 |
-| `workspace-layout` | 多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo）；隨附 `/instruction` command |
+| `workspace-layout` | 多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo）；隨附 `/instructions` command |
 | `teamwork-update-check` | 手動比對團隊 Core 與 Extension Packs repository 的版本與變更，套用前詢問使用者 |
 
 ## Commands
@@ -56,7 +56,7 @@ Core 提供兩個手動 command：
 
 ```text
 /teamwork-update-check
-/instruction
+/instructions
 ```
 
 `/teamwork-update-check` 會讀取 `sawaichi9527/opencode-essential-core` 與 `sawaichi9527/opencode-extension-packs` 發布的
@@ -65,7 +65,7 @@ Core 提供兩個手動 command：
 新增與移除的元件、CHANGELOG 與相容性要求，通知差異並在確認後才升級。
 它不會由 `session-start` 自動觸發，也不會在未獲得確認前修改本機設定或安裝套件。
 
-`/instruction` 是 `workspace-layout` Skill 的搭配 command，與該 Skill 一起安裝。它會依 OpenCode
+`/instructions` 是 `workspace-layout` Skill 的搭配 command，與該 Skill 一起安裝。它會依 OpenCode
 實際的載入規則列出目前生效的 instruction 來源——專案 `AGENTS.md` 由 cwd 往上搜尋但**上界是
 worktree（git root）**，而 `instructions` 欄位是額外附加、不被專案 `AGENTS.md` 遮蔽——並標明生效的
 `worktree`。若上層 workspace 規則未被載入，它會顯示要加入 `~/.config/opencode/opencode.jsonc`
@@ -81,7 +81,7 @@ Extension Packs 的 `hybrid-workflow` 屬於 `category: other` 的 workflow，�
 opencode-essential-core/
 ├── command/
 │   ├── teamwork-update-check.md
-│   └── instruction.md
+│   └── instructions.md
 ├── skills/
 │   ├── teamwork-update-check/
 │   └── project-init/

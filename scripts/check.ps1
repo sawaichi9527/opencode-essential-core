@@ -28,7 +28,7 @@ foreach ($Name in $Expected) {
 
 $CommandFiles = @(
     "teamwork-update-check.md",
-    "instruction.md"
+    "instructions.md"
 )
 foreach ($CommandName in $CommandFiles) {
     $CommandFile = Join-Path $CommandTargetDir $CommandName

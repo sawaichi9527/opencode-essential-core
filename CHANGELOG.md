@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.5 - /instructions command
+
+- Renamed the companion command of the `workspace-layout` Skill from `/instruction` to `/instructions`, matching the command the team already used locally.
+- Replaced the hand-written content with the team's own verification prompt: it prints only the loaded instruction file paths, one per line as a Markdown list.
+- Added a conditional `設定` half: when the workspace layer is not loaded it explains the findUp/worktree bound and shows the exact `instructions` block for `~/.config/opencode/opencode.jsonc`, writing only after confirmation.
+- Removed the incorrect `command/instruction.md` added in 0.2.4 and updated `manifest/skills.json`, `scripts/check.ps1`, `scripts/check.sh`, the README, and the Skill reference to `instructions`.
+- Bumped the manifest version to 0.2.5.
+
 ## 0.2.4 - /instruction command
 
 - Added the `/instruction` command as the companion of the `workspace-layout` Skill, so installing that Skill also installs the command.

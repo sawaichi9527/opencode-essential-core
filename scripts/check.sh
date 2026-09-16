@@ -26,7 +26,7 @@ done
 
 command_files=(
   teamwork-update-check.md
-  instruction.md
+  instructions.md
 )
 for command_file in "${command_files[@]}"; do
   if [[ -f "$COMMAND_TARGET_DIR/$command_file" ]]; then
