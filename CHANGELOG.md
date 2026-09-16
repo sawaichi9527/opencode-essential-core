@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.2 - Update-check query manifest and upgrade flow
+
+- Added `manifest/skills.json` as the machine-readable Core component manifest for previously installed users.
+- Reworked `teamwork-update-check` to query the two repositories' published manifests, compare them with the local installation baseline (`schemaVersion` 2), notify the user of skill and plugin version updates, and ask for confirmation before applying.
+- Updated the baseline example to Core `0.2.2` and Extension Packs `0.2.4`.
+- Updated the README status marker to `v0.2.2`.
+
+## 0.2.1 - Teamwork baseline example refresh
+
+- Updated the `teamwork-update-check` baseline example to Extension Packs `0.2.3`.
+- Updated the README status marker to `v0.2.1`.
+
 ## 0.2.0 - Extension workflow compatibility
 
 - Synchronized the Core version with the current maintenance baseline.

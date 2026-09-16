@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "repository": "https://github.com/sawaichi9527/opencode-essential-core",
+  "branch": "main",
+  "version": "0.2.2",
+  "components": [
+    {
+      "id": "environment-check",
+      "kind": "skill",
+      "sourcePath": "skills/environment-check"
+    },
+    {
+      "id": "config-check",
+      "kind": "skill",
+      "sourcePath": "skills/config-check"
+    },
+    {
+      "id": "project-init",
+      "kind": "skill",
+      "sourcePath": "skills/project-init"
+    },
+    {
+      "id": "session-start",
+      "kind": "skill",
+      "sourcePath": "skills/session-start"
+    },
+    {
+      "id": "session-close",
+      "kind": "skill",
+      "sourcePath": "skills/session-close"
+    },
+    {
+      "id": "git-basic",
+      "kind": "skill",
+      "sourcePath": "skills/git-basic"
+    },
+    {
+      "id": "teamwork-update-check",
+      "kind": "skill",
+      "sourcePath": "skills/teamwork-update-check"
+    },
+    {
+      "id": "teamwork-update-check",
+      "kind": "command",
+      "sourcePath": "command/teamwork-update-check.md"
+    }
+  ]
+}

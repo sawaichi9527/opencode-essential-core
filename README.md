@@ -6,7 +6,7 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.2.0。內容源自
+> 狀態：v0.2.2。內容源自
 > `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 但只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -57,8 +57,10 @@ Core 也提供一個手動 command：
 /teamwork-update-check
 ```
 
-它會讀取 `sawaichi9527/opencode-essential-core` 與 `sawaichi9527/opencode-extension-packs`，
-比對本機安裝基準與遠端版本、manifest、CHANGELOG、Skills、Commands、Packs 及相容性要求。
+它會讀取 `sawaichi9527/opencode-essential-core` 與 `sawaichi9527/opencode-extension-packs` 發布的
+`manifest/skills.json` 與 `manifest/packs.json`（含外部 plugin 固定版本），比對本機安裝基準
+（`~/.config/opencode/teamwork-install-state.json`），找出 skill / plugin 版本更新、
+新增與移除的元件、CHANGELOG 與相容性要求，通知差異並在確認後才升級。
 它不會由 `session-start` 自動觸發，也不會在未獲得確認前修改本機設定或安裝套件。
 
 Extension Packs 的 `hybrid-workflow` 屬於 `category: other` 的 workflow，包含泛用
@@ -75,6 +77,8 @@ opencode-essential-core/
 │   ├── teamwork-update-check/
 │   └── project-init/
 │       └── references/
+├── manifest/
+│   └── skills.json
 ├── scripts/
 ├── examples/
 └── docs/
