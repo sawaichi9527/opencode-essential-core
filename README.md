@@ -7,7 +7,7 @@ OpenCode **v2.x.x** 專用的跨平台必要核心套件：以 8 個 Skills 與 
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.3.0，**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 0.3.0 移除，詳見 [CHANGELOG](CHANGELOG.md)。
+> 狀態：v2.0.12（與 OpenCode v2.0.12 同步），**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 2.0.12 移除，詳見 [CHANGELOG](CHANGELOG.md)。
 > 內容源自 `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 只保留適合 OpenCode 小型團隊使用的部分。
 

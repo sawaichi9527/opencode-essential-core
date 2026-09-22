@@ -1,6 +1,8 @@
 # Changelog
 
-## 0.3.0 - OpenCode v2 only, v1 compatibility removed
+## 2.0.12 - OpenCode v2 only, v1 compatibility removed
+
+- Version scheme changed: the pack version now tracks the supported OpenCode release (2.0.12) instead of the previous 0.x line.
 
 - Dropped OpenCode v1.x.x support: the pack now targets v2.x.x exclusively. This is a breaking change for v1 deployments.
 - Removed the `instructions` command entirely (it depended on v1's `opencode.jsonc` `instructions` field, which v2 does not parse).
@@ -8,7 +10,7 @@
 - Deleted `scripts/opencode-version.sh` / `scripts/opencode-version.ps1`; `install.*` and `check.*` no longer detect the major version and always use the plural `commands/` directory.
 - `check.*` expects all eight Skills (including `workspace-layout`) and one Command.
 - Removed `optionalOnV2` from `manifest/skills.json`; `teamwork-update-check` now reports a `COMPATIBILITY` note instead of skipping components when OpenCode major < 2.
-- Bumped the version to 0.3.0.
+- Bumped the version to 2.0.12.
 
 ## 0.2.8 - project-init scoped to new projects, /init handles existing ones
 
