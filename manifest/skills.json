@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "repository": "https://github.com/sawaichi9527/opencode-essential-core",
   "branch": "main",
-  "version": "2.0.13-dev",
+  "version": "2.0.14",
   "components": [
     {
       "id": "environment-check",
@@ -48,6 +48,31 @@
       "id": "teamwork-update-check",
       "kind": "command",
       "sourcePath": "commands/teamwork-update-check.md"
+    },
+    {
+      "id": "project-init",
+      "kind": "command",
+      "sourcePath": "commands/project-init.md"
+    },
+    {
+      "id": "environment-check",
+      "kind": "command",
+      "sourcePath": "commands/environment-check.md"
+    },
+    {
+      "id": "config-check",
+      "kind": "command",
+      "sourcePath": "commands/config-check.md"
+    },
+    {
+      "id": "session-start",
+      "kind": "command",
+      "sourcePath": "commands/session-start.md"
+    },
+    {
+      "id": "session-close",
+      "kind": "command",
+      "sourcePath": "commands/session-close.md"
     }
   ]
 }

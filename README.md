@@ -1,13 +1,13 @@
 # OpenCode Essential Core
 
-OpenCode **v2.x.x** 專用的跨平台必要核心套件：以 8 個 Skills 與 1 個 Command，讓小型開發團隊在 Windows、WSL、Ubuntu 與 macOS 上，對環境檢查、設定檢查、專案初始化、工作階段交接、Git 基本操作、多 repo workspace 邊界與團隊基準更新採用一致做法。
+OpenCode **v2.x.x** 專用的跨平台必要核心套件：以 8 個 Skills 與 6 個 Commands，讓小型開發團隊在 Windows、WSL、Ubuntu 與 macOS 上，對環境檢查、設定檢查、專案初始化、工作階段交接、Git 基本操作、多 repo workspace 邊界與團隊基準更新採用一致做法。
 
 全部能力只依賴 OpenCode 原生機制（`AGENTS.md`、Skills、Commands、`opencode.jsonc`）：安裝時不寫入設定、不安裝第三方 plugin，可與 `opencode-extension-packs` 自由組合。
 
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v2.0.13-dev（開發中、未發布；上一版 v2.0.12 基於 OpenCode v2.0.12 驗證），**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 2.0.12 移除，詳見 [CHANGELOG](CHANGELOG.md)。
+> 狀態：v2.0.14（基於 OpenCode v2.0.14 驗證），**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 2.0.12 移除，詳見 [CHANGELOG](CHANGELOG.md)。
 > 內容源自 `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -55,11 +55,20 @@ opencode.jsonc                OpenCode 設定與權限
 
 ## Commands
 
-Core 提供一個手動 command：
+Core 提供 6 個手動 command；前 5 個是薄包裝，讓原本只有 Skill 形式的流程也能由使用者直接叫用（載入同名 Skill 並依其規則執行）：
 
 ```text
-/teamwork-update-check
+/project-init           全新或空資料夾的專案骨架（既有專案請用內建 /init）
+/environment-check      跨平台環境檢查（OpenCode、Git、Node.js、Python/uv、Shell、provider／憑證）
+/config-check           全域與專案設定、Skills、Commands、路徑與 MCP／Agent 健康檢查
+/session-start          開始工作階段：載入規則、交接與 Git 狀態（預設唯讀）
+/session-close          結束工作階段：整理成果、驗證證據、交接與 Git 變更
+/teamwork-update-check  比對團隊 Core 與 Extension Packs 版本
 ```
+
+`/project-init` 只適用全新或空資料夾；既有專案請改用 OpenCode 內建的 `/init`（依實際程式碼推導規則），避免混淆。
+
+既有安裝可透過 `/teamwork-update-check` 取得這 5 個新 command：它們在 Core manifest 中列為新元件，會被標示為 `ADDED` 並在確認後安裝。
 
 `/teamwork-update-check` 會讀取 `sawaichi9527/opencode-essential-core` 與 `sawaichi9527/opencode-extension-packs` 發布的
 `manifest/skills.json` 與 `manifest/packs.json`（含外部 plugin 固定版本），比對本機安裝基準
@@ -74,6 +83,11 @@ Extension Packs 的選用能力（如 `local-llm-dispatch-policy`、SWQA、Brows
 ```text
 opencode-essential-core/
 ├── commands/
+│   ├── project-init.md
+│   ├── environment-check.md
+│   ├── config-check.md
+│   ├── session-start.md
+│   ├── session-close.md
 │   └── teamwork-update-check.md
 ├── skills/
 │   ├── teamwork-update-check/

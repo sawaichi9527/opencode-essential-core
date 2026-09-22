@@ -1,10 +1,13 @@
 # Changelog
 
-## 2.0.13-dev - Unreleased
+## 2.0.14 - User-invocable commands for core skills
 
+- Added 5 thin commands so workflows that were previously skill-only can be run directly: `/project-init`, `/environment-check`, `/config-check`, `/session-start`, `/session-close`. Each wrapper loads its same-named Skill; `/project-init` is scoped to brand-new or empty projects, and existing projects should use the built-in `/init`.
+- The read-only commands (`/environment-check`, `/config-check`, `/session-start`) set `agent: plan`.
+- Updated `scripts/check.*` to expect all six commands, registered the command components in `manifest/skills.json`, and rewrote the README Commands section and repository tree.
 - Documented the full OpenCode v2 skill discovery set: the native global `~/.config/opencode/skills/` and project `.opencode/skills/`, plus the compatibility `~/.agents/skills/` and `.agents/skills/` (where `npx skills add -g -a opencode` installs). Updated the README "OpenCode 使用邊界" and 安裝 sections; `config-check` now lists and checks the compatibility directories and flags duplicate IDs across sources.
 - Removed the stale `hybrid-workflow` description from the README (that pack was removed in Extension Packs 2.0.12).
-- Bumped the version to `2.0.13-dev` (development; not yet validated against a released OpenCode version).
+- Bumped the version to 2.0.14.
 
 ## 2.0.12 - OpenCode v2 only, v1 compatibility removed
 

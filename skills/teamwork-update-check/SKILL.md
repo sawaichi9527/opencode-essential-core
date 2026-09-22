@@ -61,7 +61,7 @@ Core 僅支援 OpenCode v2.x.x。若本機 OpenCode major < 2 或無法確認，
   "schemaVersion": 2,
   "core": {
     "source": "https://github.com/sawaichi9527/opencode-essential-core",
-    "version": "0.2.2",
+    "version": "2.0.14",
     "commit": "<verified commit>",
     "skills": {
       "environment-check": "skills/environment-check",
@@ -74,19 +74,23 @@ Core 僅支援 OpenCode v2.x.x。若本機 OpenCode major < 2 或無法確認，
       "teamwork-update-check": "skills/teamwork-update-check"
     },
     "commands": {
-      "teamwork-update-check": "commands/teamwork-update-check.md"
+      "teamwork-update-check": "commands/teamwork-update-check.md",
+      "project-init": "commands/project-init.md",
+      "environment-check": "commands/environment-check.md",
+      "config-check": "commands/config-check.md",
+      "session-start": "commands/session-start.md",
+      "session-close": "commands/session-close.md"
     }
   },
   "extensionPacks": {
     "source": "https://github.com/sawaichi9527/opencode-extension-packs",
-    "version": "0.2.4",
+    "version": "2.0.14",
     "commit": "<verified commit>",
     "selected": [],
     "plugins": {
-      "ppt-master": "v6.4.0",
-      "playwright-mcp": "@playwright/mcp@0.0.81",
-      "codebase-memory-mcp": "codebase-memory-mcp@0.11.0",
-      "token-usage": "@ramtinj95/opencode-tokenscope@1.8.1"
+      "ppt-master": "v6.6.0",
+      "playwright-mcp": "@playwright/mcp@0.0.82",
+      "codebase-memory-mcp": "codebase-memory-mcp@0.11.0"
     }
   }
 }

@@ -32,7 +32,14 @@ foreach ($Name in $Expected) {
     }
 }
 
-$CommandFiles = @("teamwork-update-check.md")
+$CommandFiles = @(
+    "teamwork-update-check.md",
+    "project-init.md",
+    "environment-check.md",
+    "config-check.md",
+    "session-start.md",
+    "session-close.md"
+)
 
 $commandDirLabel = [System.IO.Path]::GetFileName($CommandTargetDir.TrimEnd('/','\'))
 foreach ($CommandName in $CommandFiles) {

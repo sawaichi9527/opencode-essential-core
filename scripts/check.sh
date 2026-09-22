@@ -30,7 +30,14 @@ for name in "${expected[@]}"; do
   fi
 done
 
-command_files=(teamwork-update-check.md)
+command_files=(
+  teamwork-update-check.md
+  project-init.md
+  environment-check.md
+  config-check.md
+  session-start.md
+  session-close.md
+)
 
 COMMAND_DIR_LABEL="$(basename "$COMMAND_TARGET_DIR")"
 
