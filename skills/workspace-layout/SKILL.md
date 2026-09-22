@@ -27,12 +27,21 @@ git 指令本身的權限分級（哪些可直接執行、哪些要先確認、�
 
 ## 規則載入
 
-OpenCode 的專案規則搜尋會從 cwd 往上找 `AGENTS.md`，但**上界是 worktree（git root）**。因此在 `workspace/projects/<專案>/` 開 session 時，專案的 `AGENTS.md` 會勝出，**workspace 根的規則不會被載入**。
+v2 的規則載入順序（來源：[Instructions](https://opencode.ai/v2/docs/instructions/)）：先載入全域檔，再從目前工作目錄**朝 home 方向**一路往上，把路徑上的 `AGENTS.md` **全部合併**。
 
-處理方式（v2，由使用者選擇，不自動改設定）：
+- 全域檔：`~/.config/opencode/AGENTS.md`（永遠載入）。
+- 專案鏈：從 cwd 往上到 home 之間的所有 `AGENTS.md` 都會載入（最近的優先，之後再補上較上層的）。
+- 若工作區在 **home 目錄之外**，向上搜尋止於 project root。
+- 若 cwd 在 project root **之外**，只載入全域檔。
+- v2 **只認 `AGENTS.md`**，不把 `CLAUDE.md` 當備援。
+- OpenCode 會把這些檔案**合併**，不會在衝突時取捨或讓某個檔案「勝出」。
 
-1. 先確認目前 session 實際載入了哪些 instructions（v2 會自動載入全域與專案 `AGENTS.md`，直接確認即可，不需要額外指令）；
-2. workspace 層規則若為**所有專案共通**，放入全域 `~/.config/opencode/AGENTS.md`（全域載入，不被專案 `AGENTS.md` 遮蔽）；
+因此多 repo workspace（例如 `~/workspace/<專案>/`）開 session 時，workspace 根的 `AGENTS.md` 通常**會被載入**；只有當工作區在 home 外、或 cwd 落在 project root 之外時，上層規則才不會被載入。
+
+處理方式（由使用者選擇，不自動改設定）：
+
+1. 先確認目前 session 實際載入了哪些 `AGENTS.md`（v2 會自動載入全域與專案檔，直接確認即可，不需要額外指令）；
+2. workspace 層規則若為**所有專案共通**，放入全域 `~/.config/opencode/AGENTS.md`（全域優先載入，不會被專案檔取代）；
 3. 若只與**單一專案**相關，直接寫進該專案的 `AGENTS.md`；
 4. 修改設定檔前顯示差異並取得使用者確認，寫入後驗證 JSONC 可解析。
 
@@ -46,7 +55,7 @@ OpenCode 的專案規則搜尋會從 cwd 往上找 `AGENTS.md`，但**上界是 
 ## 硬規則
 
 1. **Writes single-repo**：一次寫入只針對一個 repo；一次 commit 只能屬於一個 repo。
-2. **Reads cross-repo**：唯讀可跨專案查閱（grep、讀檔、比對），不受限制。
+2. **Reads cross-repo**：唯讀可跨專案查閱（grep、讀檔、比對）。注意 v2 預設對目前 Location 與 project worktree 之外的路徑要求 `external_directory` 批准（`external_directory: *` 預設為 `ask`）；跨 repo 查閱時若被要求批准，可對 workspace 根下的兄弟 repo 路徑在 `opencode.jsonc` 加 `external_directory: allow`（例如 `{ "action": "external_directory", "resource": "<workspace>/projects/*", "effect": "allow" }`），或逐次批准。
 3. 一律使用 `git -C <repo>`；不要在 A 目錄對 B repo 下 git 指令。
 4. **禁止跨 repo `git add`**。不要用 `git add -A` 或 `git add .` 從上層掃描。
 5. 不要為了方便而在巢狀位置再 `git init` 一層（例如在專案外層多包一層 repo）。

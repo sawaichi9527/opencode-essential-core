@@ -31,7 +31,13 @@ description: 以小型團隊可理解的方式執行本地 Git 基本操作；�
 
 ## 與 v2 permissions 分工
 
-- 在 OpenCode v2，上述「可直接執行／先詢問／預設禁止」會對應並由 runtime 的 permission 系統強制：唯讀 git（`status`／`diff`／`log`／`branch`／`remote -v`／`fetch`）對應 `read`＋`bash: allow`；寫入 git（`add`／`commit`／`pull`／`push`／branch 切換）對應 `ask`；禁止項目應設為 `deny`。
+- 在 OpenCode v2，上述「可直接執行／先詢問／預設禁止」會對應並由 runtime 的 permission 系統強制（action 一律用 `shell`，跨 Windows／Linux／macOS 通用）：唯讀 git（`status`／`diff`／`log`／`branch`／`remote -v`／`fetch`）對應 `shell` + `allow`；寫入 git（`add`／`commit`／`pull`／`push`／branch 切換）對應 `shell` + `ask`；禁止項目設為 `deny`。範例：
+
+```jsonc
+{ "action": "shell", "resource": "git status *", "effect": "allow" },
+{ "action": "shell", "resource": "git push *", "effect": "deny" }
+```
+
 - 本 Skill 補足未開細粒度權限時團隊所需的語意；若已用 v2 permissions 強制，可視情況簡化重複檢查。
 
 GitHub 與 Forgejo 的帳號、PR/MR、MCP 與 API 整合應由 Extension Pack 處理。
