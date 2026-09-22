@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "repository": "https://github.com/sawaichi9527/opencode-essential-core",
   "branch": "main",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "components": [
     {
       "id": "environment-check",

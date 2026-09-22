@@ -6,7 +6,7 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.2.7。內容源自
+> 狀態：v0.2.8。內容源自
 > `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 但只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -43,7 +43,7 @@ opencode.jsonc               OpenCode 設定與權限
 |---|---|
 | `environment-check` | 檢查 OpenCode、Git、Node.js、Python/uv 與執行平台 |
 | `config-check` | 檢查全域與專案域 OpenCode 設定、Skills、Commands 與路徑覆蓋 |
-| `project-init` | 使用隨 Skill 安裝的 Reference 建立最小 OpenCode 專案結構 |
+| `project-init` | 為全新/空資料夾建立基本專案骨架（`AGENTS.md`、`handoff.md`、`README`、`src/tests/docs`）；既有專案請改用 v2 內建 `/init` |
 | `session-start` | 開始工作前讀取規則、交接與 Git 狀態 |
 | `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
 | `git-basic` | 統一安全且可理解的本地 Git 操作 |
@@ -146,7 +146,7 @@ Commands 的安裝／驗證目錄亦依版本決定：v2 使用 v2 推薦的複�
 
 ## OpenCode 專案規則
 
-新專案透過 `project-init` 建立 `AGENTS.md` 與 `handoff.md`。這些檔案應只放 OpenCode 每次工作都需要知道的內容：
+新專案透過 `project-init` 建立 `AGENTS.md` 與 `handoff.md`（專為全新/空資料夾；已有程式碼與 `AGENTS.md` 的既有專案請改用 v2 內建的 `/init`）。這些檔案應只放 OpenCode 每次工作都需要知道的內容：
 
 - 專案目的與邊界
 - 小幅且可審查的修改原則

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.8 - project-init scoped to new projects, /init handles existing ones
+
+- Clarified the division between the `project-init` Skill and OpenCode v2's built-in `/init`: `project-init` is for brand-new or empty directories (scaffolds `AGENTS.md`, `handoff.md`, `README`, `src/`, `tests/`, `docs/` from templates), while existing projects with code and an `AGENTS.md` should use the built-in `/init`, which infers rules from the actual codebase.
+- `project-init` will not overwrite an existing `AGENTS.md`; it defers to `/init` in that case.
+- Documented this scope in `skills/project-init/SKILL.md`, the README Skills table and project-rules section, and `handoff.md`.
+- Bumped the manifest version to 0.2.8.
+
 ## 0.2.7 - commands/ directory is version-aware
 
 - The repo command source directory is now `commands/` (plural), matching OpenCode v2's recommendation; the singular `command/` name is retained only as the install target on OpenCode v1.x.x.
