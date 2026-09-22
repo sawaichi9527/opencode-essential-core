@@ -28,7 +28,9 @@ Windows 的 `~` 對應目前使用者家目錄，不要假設一定在 Documents
 6. `project-init` 是否包含 `references/AGENTS.template.md` 與 `references/handoff.template.md`。
 7. 是否把 Token、密碼或私鑰直接寫入設定、Skill 或 Command。
 8. Windows 與 WSL 是否誤用彼此的執行檔或虛擬環境。
-9. 只提出修改建議；修改前先顯示差異並取得同意。
+9. MCP server 是否配置正常且可連線（`opencode mcp ls`）。
+10. Agent 是否配置正常（`opencode agent list`）。
+11. 只提出修改建議；修改前先顯示差異並取得同意。
 
 ## 輸出
 

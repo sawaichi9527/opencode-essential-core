@@ -41,12 +41,12 @@ opencode.jsonc               OpenCode 設定與權限
 
 | Skill | 中文用途 |
 |---|---|
-| `environment-check` | 檢查 OpenCode、Git、Node.js、Python/uv 與執行平台 |
-| `config-check` | 檢查全域與專案域 OpenCode 設定、Skills、Commands 與路徑覆蓋 |
+| `environment-check` | 跨平台檢查 OpenCode、Git、Node.js、Python/uv 與執行平台，含 provider／憑證是否就緒 |
+| `config-check` | 檢查全域與專案域 OpenCode 設定、Skills、Commands 與路徑覆蓋，含 MCP／Agent 健康檢查 |
 | `project-init` | 為全新/空資料夾建立基本專案骨架（`AGENTS.md`、`handoff.md`、`README`、`src/tests/docs`）；既有專案請改用 v2 內建 `/init` |
 | `session-start` | 開始工作前確認規則已載入、交接與 Git 狀態 |
 | `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
-| `git-basic` | 統一安全且可理解的本地 Git 操作 |
+| `git-basic` | 統一安全且可理解的本地 Git 操作；寫入／禁止項目在 v2 由 runtime permission 強制 |
 | `workspace-layout` | 多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo）；隨附 `/instructions` command（**v1-only**） |
 | `teamwork-update-check` | 手動比對團隊 Core 與 Extension Packs repository 的版本與變更，套用前詢問使用者 |
 
