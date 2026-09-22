@@ -58,12 +58,15 @@ else {
         "instructions.md"
     )
 }
+
+# Label for display: reflects the actual directory used (commands/ on v2, command/ on v1).
+$commandDirLabel = [System.IO.Path]::GetFileName($CommandTargetDir.TrimEnd('/','\'))
 foreach ($CommandName in $CommandFiles) {
     $CommandFile = Join-Path $CommandTargetDir $CommandName
     if (Test-Path $CommandFile) {
-        Write-Host "[OK] command/$CommandName"
+        Write-Host "[OK] $commandDirLabel/$CommandName"
     } else {
-        Write-Host "[MISSING] command/$CommandName"
+        Write-Host "[MISSING] $commandDirLabel/$CommandName"
         $Failed = $true
     }
 }

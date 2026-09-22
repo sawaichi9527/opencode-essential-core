@@ -53,11 +53,15 @@ else
     instructions.md
   )
 fi
+
+# Label for display: reflects the actual directory used (commands/ on v2, command/ on v1).
+COMMAND_DIR_LABEL="$(basename "$COMMAND_TARGET_DIR")"
+
 for command_file in "${command_files[@]}"; do
   if [[ -f "$COMMAND_TARGET_DIR/$command_file" ]]; then
-    echo "[OK] command/$command_file"
+    echo "[OK] ${COMMAND_DIR_LABEL}/$command_file"
   else
-    echo "[MISSING] command/$command_file"
+    echo "[MISSING] ${COMMAND_DIR_LABEL}/$command_file"
     failed=1
   fi
 done
