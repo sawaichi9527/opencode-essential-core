@@ -2,7 +2,7 @@
 
 ## 2.0.12 - OpenCode v2 only, v1 compatibility removed
 
-- Version scheme changed: the pack version now tracks the supported OpenCode release (2.0.12) instead of the previous 0.x line.
+- Version scheme changed: the pack version now records the OpenCode version this release was validated against (2.0.12), instead of the previous 0.x line. The pack does not bump just because OpenCode released a new version; the next review round of this pack will adopt the OpenCode version current at that time.
 
 - Dropped OpenCode v1.x.x support: the pack now targets v2.x.x exclusively. This is a breaking change for v1 deployments.
 - Removed the `instructions` command entirely (it depended on v1's `opencode.jsonc` `instructions` field, which v2 does not parse).

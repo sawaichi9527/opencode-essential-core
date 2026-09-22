@@ -7,7 +7,7 @@ OpenCode **v2.x.x** 專用的跨平台必要核心套件：以 8 個 Skills 與 
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v2.0.12（與 OpenCode v2.0.12 同步），**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 2.0.12 移除，詳見 [CHANGELOG](CHANGELOG.md)。
+> 狀態：v2.0.12（基於 OpenCode v2.0.12 驗證），**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 2.0.12 移除，詳見 [CHANGELOG](CHANGELOG.md)。
 > 內容源自 `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -123,6 +123,8 @@ C:\Users\<user>\.config\opencode\commands\
 ## 版本要求
 
 本套件僅支援 OpenCode **v2.x.x**：
+
+- 版本編號記錄「該版 pack 基於哪個 OpenCode 版本驗證通過」（如 `2.0.12` = 基於 OpenCode v2.0.12 驗證）。OpenCode 單純發版不會觸發 pack 升版；下次對本 pack 檢討或修正時，再以當時的 OpenCode 版本號作為新版號。
 
 - v2 的專案規則使用內建 `AGENTS.md` 機制；v1 獨有的 `instructions` 設定欄位與單數 `command/` 目錄不在支援範圍。
 - `/teamwork-update-check` 若偵測到 OpenCode major < 2 或無法確認，會標示 `COMPATIBILITY` 提醒，但唯讀檢查仍會執行。
