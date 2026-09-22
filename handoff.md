@@ -7,7 +7,7 @@
 | 項目 | 值 |
 |---|---|
 | 版本 | `2.0.12`（`VERSION` / `manifest/skills.json`；版號 = 該次檢討時所基於驗證的 OpenCode 版本） |
-| 分支 | `main`（HEAD `d855b04`；PR #3 已關閉由 #4 取代、PR #4 已合併） |
+| 分支 | `main`（HEAD 以 `git log -1` 為準；PR #3 已關閉由 #4 取代、PR #4 已合併） |
 | 相容性 | **僅支援 OpenCode v2.x.x**，v1 相容已於 2.0.12 移除 |
 
 ## 專案定位
@@ -44,6 +44,7 @@ Core 只保留多數使用者的共通能力，不綁定特定公司、部門或
 
 ## 發布與驗證
 
+- `v2.0.12` 已於 2026-09-22 發布：GitHub 與 Forgejo 皆有 `v2.0.12` release（notes 取自 CHANGELOG 2.0.12），annotated tag `v2.0.12` → `516d103`，三方 tag 一致；此為本 repo 首次發 release。
 - 變更流程慣例：改動時同步更新 `VERSION`、`manifest/skills.json`、`CHANGELOG.md`、README 與相關 Skill / Command 文件，再執行 `scripts/check.ps1`（Windows）或 `check.sh`（Bash）驗證八個 Skills、一個 Command 與 Project Init References。
 - 三方同步慣例：本地 `main` = GitHub `origin/main` = Forgejo `forgejo/main`，任一方前進後同步其餘兩方。本機已設定 `origin` 與 `forgejo` 兩個 remote；憑證存於本機 credential store（`~/.git-credentials`），不入 repo、不寫入任何追蹤檔案。
 
