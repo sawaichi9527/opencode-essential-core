@@ -1,5 +1,39 @@
 # Changelog
 
+## 0.3.0 - OpenCode v2 only, v1 compatibility removed
+
+- Dropped OpenCode v1.x.x support: the pack now targets v2.x.x exclusively. This is a breaking change for v1 deployments.
+- Removed the `instructions` command entirely (it depended on v1's `opencode.jsonc` `instructions` field, which v2 does not parse).
+- Kept the `workspace-layout` Skill for multi-repo boundary guidance; its rule-loading section now describes the v2-native approach (global `~/.config/opencode/AGENTS.md` for workspace-wide rules instead of the v1 `instructions` field) and no longer references `/instructions`.
+- Deleted `scripts/opencode-version.sh` / `scripts/opencode-version.ps1`; `install.*` and `check.*` no longer detect the major version and always use the plural `commands/` directory.
+- `check.*` expects all eight Skills (including `workspace-layout`) and one Command.
+- Removed `optionalOnV2` from `manifest/skills.json`; `teamwork-update-check` now reports a `COMPATIBILITY` note instead of skipping components when OpenCode major < 2.
+- Bumped the version to 0.3.0.
+
+## 0.2.8 - project-init scoped to new projects, /init handles existing ones
+
+- Clarified the division between the `project-init` Skill and OpenCode v2's built-in `/init`: `project-init` is for brand-new or empty directories (scaffolds `AGENTS.md`, `handoff.md`, `README`, `src/`, `tests/`, `docs/` from templates), while existing projects with code and an `AGENTS.md` should use the built-in `/init`, which infers rules from the actual codebase.
+- `project-init` will not overwrite an existing `AGENTS.md`; it defers to `/init` in that case.
+- Documented this scope in `skills/project-init/SKILL.md`, the README Skills table and project-rules section, and `handoff.md`.
+- Bumped the manifest version to 0.2.8.
+
+## 0.2.7 - commands/ directory is version-aware
+
+- The repo command source directory is now `commands/` (plural), matching OpenCode v2's recommendation; the singular `command/` name is retained only as the install target on OpenCode v1.x.x.
+- `install.sh` / `install.ps1` pick the command install directory by detected major: v2 → `~/.config/opencode/commands/`, v1 (or undetectable) → `~/.config/opencode/command/`. An explicit second argument still overrides.
+- `check.sh` / `check.ps1` verify the same version-specific directory.
+- Updated `manifest/skills.json` source paths, the README structure/install sections, the `teamwork-update-check` and `config-check` Skills, and `handoff.md`.
+- Bumped the manifest version to 0.2.7.
+
+## 0.2.6 - v1-only workspace-layout and instructions
+
+- Treat `workspace-layout` (skill) and `instructions` (command) as OpenCode v1.x.x only. On v2 the built-in `AGENTS.md` mechanism replaces them, so they are no longer installed by default.
+- `install.sh` / `install.ps1` now detect the consuming OpenCode major version (`scripts/opencode-version.sh` / `opencode-version.ps1`) and skip these components when major ≥ 2.
+- `check.sh` / `check.ps1` no longer require them on v2 (they still do on v1).
+- `teamwork-update-check` skips `optionalOnV2` components instead of reporting them as updates.
+- Marked both components `optionalOnV2: true` in `manifest/skills.json`; `FORCE=1` / `-Force` still installs them on v2.
+- Documented the v1/v2 split in the README.
+
 ## 0.2.5 - /instructions command
 
 - Renamed the companion command of the `workspace-layout` Skill from `/instruction` to `/instructions`, matching the command the team already used locally.

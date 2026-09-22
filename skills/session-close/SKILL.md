@@ -29,6 +29,12 @@ description: 結束工作階段時整理完成內容、最新驗證證據、hand
 10. 只有在使用者同意後才執行 `git add` 與 `git commit`。
 11. `git push` 必須再次取得同意。
 
+## 與 v2 內建機制的分工
+
+- v2 會自動產生 session summary、持久化 session（`session list`／`--continue`／`--fork`／`export`），並提供內建 todo（`toread`／`todowrite`）。
+- 本 Skill 補的是 v2 沒有的**結構化 SWQA 驗證證據**（命令、exit code、DUT／firmware、UART／PCAP／Report 路徑）；v2 的自動摘要只還原對話，不記錄這些。
+- 可選整合：用 `toread` 列出未完成事項，與 `handoff.md` 互相補充；若需保留原始 session 資料，以 `opencode export` 輸出 JSON。
+
 ## 完成宣告
 
 - 沒有本次修改後的新驗證證據，不宣稱「完成」、「已修復」或「全部通過」。

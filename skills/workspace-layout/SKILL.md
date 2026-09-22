@@ -25,19 +25,16 @@ git 指令本身的權限分級（哪些可直接執行、哪些要先確認、�
 
 與本 Skill 相關的常見缺口：`session-start` 的「確認目前專案根目錄」與 `session-close` 的 commit 流程都是**單一 repo 視角**，在多 repo workspace 中不會自動帶入上層資訊，需要本 Skill 補上。
 
-## 規則載入與 `/instructions`
+## 規則載入
 
-本 Skill 隨附 `/instructions` command，處理「上層規則沒有被載入」這個結構性問題。
+OpenCode 的專案規則搜尋會從 cwd 往上找 `AGENTS.md`，但**上界是 worktree（git root）**。因此在 `workspace/projects/<專案>/` 開 session 時，專案的 `AGENTS.md` 會勝出，**workspace 根的規則不會被載入**。
 
-OpenCode 的專案規則搜尋會從 cwd 往上找 `AGENTS.md`（其次 `CLAUDE.md`、`CONTEXT.md`），但**上界是 worktree（git root）**。因此在 `workspace/projects/<專案>/` 開 session 時，專案的 `AGENTS.md` 會勝出，**workspace 根的規則永遠不會被載入**。
+處理方式（v2，由使用者選擇，不自動改設定）：
 
-補救方式是 `~/.config/opencode/opencode.jsonc` 的 `instructions` 欄位：它是**額外附加**、不走向上的搜尋、也不會被專案 `AGENTS.md` 遮蔽。
-
-`/instructions` 會：
-
-1. 依上述規則列出目前**實際載入**的 instruction 來源，並標明生效的 `worktree`；
-2. 若 workspace 層未被納入，顯示建議加入 `instructions` 的內容（workspace 根的 `AGENTS.md` 與 `WORKSPACE.md`）；
-3. 只有使用者確認後才寫入 `opencode.jsonc`，並在寫入後驗證 JSONC。
+1. 先確認目前 session 實際載入了哪些 instructions（v2 會自動載入全域與專案 `AGENTS.md`，直接確認即可，不需要額外指令）；
+2. workspace 層規則若為**所有專案共通**，放入全域 `~/.config/opencode/AGENTS.md`（全域載入，不被專案 `AGENTS.md` 遮蔽）；
+3. 若只與**單一專案**相關，直接寫進該專案的 `AGENTS.md`；
+4. 修改設定檔前顯示差異並取得使用者確認，寫入後驗證 JSONC 可解析。
 
 ## 動工前：先判斷層級
 

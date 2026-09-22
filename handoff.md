@@ -1,15 +1,14 @@
 # handoff.md — OpenCode Essential Core
 
-> 供接手 Session 閱讀的現況摘要。更新時間：2026-09-18
+> 供接手 Session 閱讀的現況摘要。更新時間：2026-09-22
 
 ## 目前狀態
 
 | 項目 | 值 |
 |---|---|
-| 版本 | `0.2.5`（`VERSION` / `manifest/skills.json`） |
-| HEAD | `7fadeac` — Rename companion command to /instructions using the team prompt (0.2.5) |
-| 三方同步 | 本地 `main` = GitHub `origin/main` = Forgejo `forgejo/main` = `7fadeac` |
-| working tree | clean，無未提交變更 |
+| 版本 | `0.3.0`（`VERSION` / `manifest/skills.json`） |
+| 分支 | `feat/pure-v2` → `main`（PR 待審核） |
+| 相容性 | **僅支援 OpenCode v2.x.x**，v1 相容已於 0.3.0 移除 |
 
 ## 專案定位
 
@@ -20,31 +19,31 @@ Core 只保留多數使用者的共通能力，不綁定特定公司、部門或
 
 ## 目錄結構
 
-- `command/` — 兩個手動 command：`teamwork-update-check.md`、`instructions.md`
+- `commands/` — 一個手動 command：`teamwork-update-check.md`（安裝至 `~/.config/opencode/commands/`）
 - `skills/` — 八個 OpenCode 原生 Skill：
   `environment-check`、`config-check`、`project-init`、`session-start`、`session-close`、`git-basic`、`workspace-layout`、`teamwork-update-check`
-  （`project-init/references/` 內含 `AGENTS.md`、`handoff.md` 範本）
-- `manifest/skills.json` — 機器可讀元件清單，schemaVersion 1，version 0.2.5
-- `scripts/` — `install.ps1` / `install.sh`、`check.ps1` / `check.sh`
+  （`project-init/references/` 內含 `AGENTS.md`、`handoff.md` 範本；`project-init` 專為全新專案建立骨架，既有專案改用 v2 內建 `/init`）
+- `manifest/skills.json` — 機器可讀元件清單，schemaVersion 1，version 0.3.0
+- `scripts/` — `install.ps1` / `install.sh`、`check.ps1` / `check.sh`（無版本偵測，一律 v2 行為）
 - `examples/`、`templates/`、`docs/` — 範例、範本與文件
 - `UPSTREAM.md` — 上游來源（`mathruffian-dot/opencode-lazy-packs` 概念）與轉化說明
 - `AGENTS.md` 與 `handoff.md` 範本在 `project-init/references/`，安裝單一 Skill 後仍可使用
 
-## 最近變更（0.2.2 → 0.2.5）
+## 最近變更（0.2.8 → 0.3.0）
 
-1. **0.2.5（9/16）**：`/instruction` → `/instructions`，以團隊實際使用的 command 為準；改為列印已載入 instruction 檔案路徑，並在 workspace 層未載入時顯示 `instructions` 設定塊（確認後才寫入）。
-2. **0.2.4（9/16）**：新增 `/instruction` command 作為 `workspace-layout` 的搭配；刪除前版錯誤內容。
-3. **0.2.3（9/16）**：新增 `workspace-layout` Skill——多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo，不跨 repo staging）；git 權限沿用 `git-basic`。
-4. **0.2.2**：新增 `manifest/skills.json`；`teamwork-update-check` 改讀兩個 repository 的 manifest，比對本機安裝基準，確認後才套用。
+1. **0.3.0（9/22）**：移除 v1 相容、改為僅支援 v2——刪除 `/instructions` command 與 `opencode-version.*` 偵測腳本、移除 manifest `optionalOnV2`；保留 `workspace-layout`（多 repo 邊界指引），其規則載入段改寫為 v2 原生做法（workspace 級規則放全域 `AGENTS.md`）。
+2. **0.2.8**：`project-init` 收斂為新建專案；既有專案改用 v2 內建 `/init`。
+3. **0.2.7**：command 源目錄改複數 `commands/`，安裝路徑依偵測版本決定。
+4. **0.2.6**：`workspace-layout`／`instructions` 標記 `optionalOnV2`（v1-only，0.3.0 已移除該機制）。
 
 ## 目前 Command / Skill 對應
 
-- Eight Core Skills、two Core Commands（`/teamwork-update-check`、`/instructions`）安裝至 `~/.config/opencode/skills/` 與 `~/.config/opencode/command/`。
+- Eight Core Skills、one Core Command（`/teamwork-update-check`）安裝至 `~/.config/opencode/skills/` 與 `~/.config/opencode/commands/`（一律 v2 路徑）。
 - `/teamwork-update-check` 讀取本 repo `main` 的 `manifest/skills.json` 與 Extension Packs 的 `manifest/packs.json` 作為更新比對來源；不由 `session-start` 自動觸發。
 
 ## 發布與驗證
 
-- 變更流程慣例：改動時同步更新 `VERSION`、`manifest/skills.json`、`CHANGELOG.md`、README 與相關 Skill / Command 文件，再執行 `scripts/check.ps1`（Windows）或 `check.sh`（Bash）驗證八個 Skills、兩個 Commands 與 Project Init References。
+- 變更流程慣例：改動時同步更新 `VERSION`、`manifest/skills.json`、`CHANGELOG.md`、README 與相關 Skill / Command 文件，再執行 `scripts/check.ps1`（Windows）或 `check.sh`（Bash）驗證八個 Skills、一個 Command 與 Project Init References。
 - 三方同步慣例：本地 `main` = GitHub `origin/main` = Forgejo `forgejo/main`，任一方前進後同步其餘兩方。
 
 ## 待辦 / 注意事項

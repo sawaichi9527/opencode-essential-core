@@ -1,8 +1,14 @@
 [CmdletBinding()]
 param(
     [string]$TargetDir = (Join-Path $HOME ".config\opencode\skills"),
-    [string]$CommandTargetDir = (Join-Path $HOME ".config\opencode\command")
+    [string]$CommandTargetDir = ""
 )
+
+$RepoRoot = Split-Path -Parent $PSScriptRoot
+
+# This pack targets OpenCode v2 only: verify the plural commands/ directory.
+# An explicit -CommandTargetDir override always wins.
+$CommandTargetDir = if ($CommandTargetDir) { $CommandTargetDir } else { Join-Path $HOME ".config\opencode\commands" }
 
 $Expected = @(
     "environment-check",
@@ -26,16 +32,15 @@ foreach ($Name in $Expected) {
     }
 }
 
-$CommandFiles = @(
-    "teamwork-update-check.md",
-    "instructions.md"
-)
+$CommandFiles = @("teamwork-update-check.md")
+
+$commandDirLabel = [System.IO.Path]::GetFileName($CommandTargetDir.TrimEnd('/','\'))
 foreach ($CommandName in $CommandFiles) {
     $CommandFile = Join-Path $CommandTargetDir $CommandName
     if (Test-Path $CommandFile) {
-        Write-Host "[OK] command/$CommandName"
+        Write-Host "[OK] $commandDirLabel/$CommandName"
     } else {
-        Write-Host "[MISSING] command/$CommandName"
+        Write-Host "[MISSING] $commandDirLabel/$CommandName"
         $Failed = $true
     }
 }

@@ -1,14 +1,15 @@
 # OpenCode Essential Core
 
-OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、WSL、Ubuntu 與 macOS 上，
-對環境檢查、專案初始化、工作階段交接、Git 基本操作與團隊基準更新採用一致做法。
+OpenCode **v2.x.x** 專用的跨平台必要核心套件：以 8 個 Skills 與 1 個 Command，讓小型開發團隊在 Windows、WSL、Ubuntu 與 macOS 上，對環境檢查、設定檢查、專案初始化、工作階段交接、Git 基本操作、多 repo workspace 邊界與團隊基準更新採用一致做法。
+
+全部能力只依賴 OpenCode 原生機制（`AGENTS.md`、Skills、Commands、`opencode.jsonc`）：安裝時不寫入設定、不安裝第三方 plugin，可與 `opencode-extension-packs` 自由組合。
 
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.2.5。內容源自
-> `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
-> 但只保留適合 OpenCode 小型團隊使用的部分。
+> 狀態：v0.3.0，**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 0.3.0 移除，詳見 [CHANGELOG](CHANGELOG.md)。
+> 內容源自 `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
+> 只保留適合 OpenCode 小型團隊使用的部分。
 
 ## OpenCode 使用邊界
 
@@ -18,8 +19,8 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 AGENTS.md                    專案共用規則
 .opencode/skills/            專案限定 Skills
 ~/.config/opencode/skills/   全域共用 Skills
-.opencode/command/           專案限定 Commands
-~/.config/opencode/command/  全域共用 Commands
+.opencode/commands/          專案限定 Commands
+~/.config/opencode/commands/ 全域共用 Commands
 opencode.jsonc               OpenCode 設定與權限
 ```
 
@@ -41,22 +42,21 @@ opencode.jsonc               OpenCode 設定與權限
 
 | Skill | 中文用途 |
 |---|---|
-| `environment-check` | 檢查 OpenCode、Git、Node.js、Python/uv 與執行平台 |
-| `config-check` | 檢查全域與專案域 OpenCode 設定、Skills、Commands 與路徑覆蓋 |
-| `project-init` | 使用隨 Skill 安裝的 Reference 建立最小 OpenCode 專案結構 |
-| `session-start` | 開始工作前讀取規則、交接與 Git 狀態 |
+| `environment-check` | 跨平台檢查 OpenCode、Git、Node.js、Python/uv 與執行平台，含 provider／憑證是否就緒 |
+| `config-check` | 檢查全域與專案域 OpenCode 設定、Skills、Commands 與路徑覆蓋，含 MCP／Agent 健康檢查 |
+| `project-init` | 為全新/空資料夾建立基本專案骨架（`AGENTS.md`、`handoff.md`、`README`、`src/tests/docs`）；既有專案請改用 v2 內建 `/init` |
+| `session-start` | 開始工作前確認規則已載入、交接與 Git 狀態 |
 | `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
-| `git-basic` | 統一安全且可理解的本地 Git 操作 |
-| `workspace-layout` | 多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo）；隨附 `/instructions` command |
+| `git-basic` | 統一安全且可理解的本地 Git 操作；寫入／禁止項目在 v2 由 runtime permission 強制 |
+| `workspace-layout` | 多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo），含 workspace 層規則的載入方式 |
 | `teamwork-update-check` | 手動比對團隊 Core 與 Extension Packs repository 的版本與變更，套用前詢問使用者 |
 
 ## Commands
 
-Core 提供兩個手動 command：
+Core 提供一個手動 command：
 
 ```text
 /teamwork-update-check
-/instructions
 ```
 
 `/teamwork-update-check` 會讀取 `sawaichi9527/opencode-essential-core` 與 `sawaichi9527/opencode-extension-packs` 發布的
@@ -64,12 +64,6 @@ Core 提供兩個手動 command：
 （`~/.config/opencode/teamwork-install-state.json`），找出 skill / plugin 版本更新、
 新增與移除的元件、CHANGELOG 與相容性要求，通知差異並在確認後才升級。
 它不會由 `session-start` 自動觸發，也不會在未獲得確認前修改本機設定或安裝套件。
-
-`/instructions` 是 `workspace-layout` Skill 的搭配 command，與該 Skill 一起安裝。它會依 OpenCode
-實際的載入規則列出目前生效的 instruction 來源——專案 `AGENTS.md` 由 cwd 往上搜尋但**上界是
-worktree（git root）**，而 `instructions` 欄位是額外附加、不被專案 `AGENTS.md` 遮蔽——並標明生效的
-`worktree`。若上層 workspace 規則未被載入，它會顯示要加入 `~/.config/opencode/opencode.jsonc`
-的 `instructions` 內容，確認後才寫入並重新驗證 JSONC。
 
 Extension Packs 的 `hybrid-workflow` 屬於 `category: other` 的 workflow，包含泛用
 `workflow_local_builder`、team 28500 專用的 `workflow_local_builder_aeon`，以及導入時選擇雲端模型的
@@ -79,9 +73,8 @@ Extension Packs 的 `hybrid-workflow` 屬於 `category: other` 的 workflow，�
 
 ```text
 opencode-essential-core/
-├── command/
-│   ├── teamwork-update-check.md
-│   └── instructions.md
+├── commands/
+│   └── teamwork-update-check.md
 ├── skills/
 │   ├── teamwork-update-check/
 │   └── project-init/
@@ -115,21 +108,29 @@ bash ./scripts/check.sh
 
 ```text
 ~/.config/opencode/skills/
-~/.config/opencode/command/
+~/.config/opencode/commands/
 ```
 
 Windows 對應：
 
 ```text
 C:\Users\<user>\.config\opencode\skills\
-C:\Users\<user>\.config\opencode\command\
+C:\Users\<user>\.config\opencode\commands\
 ```
 
-安裝腳本複製八個 Core Skills 與兩個 Core Commands，但不會自動修改既有 `opencode.jsonc`，也不會安裝 Extension Packs 或第三方 plugin。檢查腳本會確認八個 Core Skills、兩個 Core Commands 與兩個 Project Init Reference 存在。
+安裝腳本會複製全部八個 Core Skills 與一個 Core Command，不做版本偵測。腳本不會自動修改既有 `opencode.jsonc`，也不會安裝 Extension Packs 或第三方 plugin。檢查腳本會確認對應的 Skills、Commands 與兩個 Project Init Reference 存在。
+
+## 版本要求
+
+本套件僅支援 OpenCode **v2.x.x**：
+
+- v2 的專案規則使用內建 `AGENTS.md` 機制；v1 獨有的 `instructions` 設定欄位與單數 `command/` 目錄不在支援範圍。
+- `/teamwork-update-check` 若偵測到 OpenCode major < 2 或無法確認，會標示 `COMPATIBILITY` 提醒，但唯讀檢查仍會執行。
+- `FORCE=1`（PowerShell 用 `-Force`）可用於覆寫既安裝檔案；第二個參數（`-CommandTargetDir`）可強制指定命令目錄。
 
 ## OpenCode 專案規則
 
-新專案透過 `project-init` 建立 `AGENTS.md` 與 `handoff.md`。這些檔案應只放 OpenCode 每次工作都需要知道的內容：
+新專案透過 `project-init` 建立 `AGENTS.md` 與 `handoff.md`（專為全新/空資料夾；已有程式碼與 `AGENTS.md` 的既有專案請改用 v2 內建的 `/init`）。這些檔案應只放 OpenCode 每次工作都需要知道的內容：
 
 - 專案目的與邊界
 - 小幅且可審查的修改原則

@@ -5,9 +5,13 @@ description: 在目前資料夾建立通用且精簡的 OpenCode 專案骨架，
 
 # Project Init
 
+## 範圍
+
+本 Skill 專為**全新或空的資料夾**建立基本專案骨架。若目標目錄已經有程式碼與 `AGENTS.md`，請改用 OpenCode v2 內建的 `/init`：它會讀取實際程式碼來制定或改進 `AGENTS.md`。本 Skill 不會覆蓋既有的 `AGENTS.md`。
+
 ## 建立前
 
-1. 顯示目前路徑，確認這是預計由 OpenCode 協助開發的專案根目錄。
+1. 確認這是**全新或空的資料夾**（預計由 OpenCode 協助開發的專案根目錄）。若目錄已有程式碼與 `AGENTS.md`，改用 v2 內建的 `/init`。
 2. 檢查是否已存在 `AGENTS.md`、`handoff.md`、README、Git 與其他重要檔案。
 3. 詢問專案名稱、主要用途與一句話成功條件。
 4. 不覆蓋既有檔案；若衝突則列出並等待確認。
