@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$TargetDir = (Join-Path $HOME ".config\opencode\skills"),
-    [string]$CommandTargetDir = (Join-Path $HOME ".config\opencode\command")
+    [string]$CommandTargetDir = ""
 )
 
 $RepoRoot = Split-Path -Parent $PSScriptRoot
@@ -14,6 +14,16 @@ if ($OpenCodeMajor -and ([int]$OpenCodeMajor) -ge 2) {
 else {
     $V2Mode = $false
 }
+
+# On OpenCode v2 verify the modern plural commands/ directory; on v1 keep the
+# legacy singular command/ directory. An explicit -CommandTargetDir override always wins.
+if ($V2Mode) {
+    $commandDirName = "commands"
+}
+else {
+    $commandDirName = "command"
+}
+$CommandTargetDir = if ($CommandTargetDir) { $CommandTargetDir } else { Join-Path $HOME ".config\opencode\$commandDirName" }
 
 # workspace-layout is v1-only: on OpenCode v2 the built-in AGENTS.md mechanism
 # replaces it, so it is not expected to be installed.

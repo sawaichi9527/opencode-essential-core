@@ -20,11 +20,11 @@ Core 只保留多數使用者的共通能力，不綁定特定公司、部門或
 
 ## 目錄結構
 
-- `command/` — 兩個手動 command：`teamwork-update-check.md`、`instructions.md`
+- `commands/` — 兩個手動 command：`teamwork-update-check.md`、`instructions.md`（v1 安裝至 `command/`，v2 安裝至 `commands/`）
 - `skills/` — 八個 OpenCode 原生 Skill：
   `environment-check`、`config-check`、`project-init`、`session-start`、`session-close`、`git-basic`、`workspace-layout`、`teamwork-update-check`
   （`project-init/references/` 內含 `AGENTS.md`、`handoff.md` 範本）
-- `manifest/skills.json` — 機器可讀元件清單，schemaVersion 1，version 0.2.5
+- `manifest/skills.json` — 機器可讀元件清單，schemaVersion 1，version 0.2.7
 - `scripts/` — `install.ps1` / `install.sh`、`check.ps1` / `check.sh`
 - `examples/`、`templates/`、`docs/` — 範例、範本與文件
 - `UPSTREAM.md` — 上游來源（`mathruffian-dot/opencode-lazy-packs` 概念）與轉化說明
@@ -39,7 +39,7 @@ Core 只保留多數使用者的共通能力，不綁定特定公司、部門或
 
 ## 目前 Command / Skill 對應
 
-- Eight Core Skills、two Core Commands（`/teamwork-update-check`、`/instructions`）安裝至 `~/.config/opencode/skills/` 與 `~/.config/opencode/command/`。
+- Eight Core Skills、two Core Commands（`/teamwork-update-check`、`/instructions`）安裝至 `~/.config/opencode/skills/` 與 `~/.config/opencode/commands/`（v2.x.x）；v1.x.x 的命令目錄為 `~/.config/opencode/command/`。
 - `/teamwork-update-check` 讀取本 repo `main` 的 `manifest/skills.json` 與 Extension Packs 的 `manifest/packs.json` 作為更新比對來源；不由 `session-start` 自動觸發。
 
 ## 發布與驗證

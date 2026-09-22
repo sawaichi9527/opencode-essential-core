@@ -9,14 +9,14 @@ description: 檢查 OpenCode 全域與專案域設定、Skill／Command 位置�
 
 - 全域設定：`~/.config/opencode/opencode.jsonc`
 - 全域 Skills：`~/.config/opencode/skills/`
-- 全域 Commands：`~/.config/opencode/command/`
+- 全域 Commands：`~/.config/opencode/commands/`（v2.x.x）；v1.x.x 為 `~/.config/opencode/command/`
 - 專案設定：專案根目錄的 OpenCode 設定
 - 專案 Skills：`<project>/.opencode/skills/`
-- 專案 Commands：`<project>/.opencode/command/`
+- 專案 Commands：`<project>/.opencode/commands/`（v2.x.x）；v1.x.x 為 `<project>/.opencode/command/`
 
 Windows 的 `~` 對應目前使用者家目錄，不要假設一定在 Documents。
 
-若同時存在 `command/` 與舊式 `commands/`，兩者都要檢查並標示實際生效者與覆蓋風險；新安裝預設使用單數 `command/`。
+命令目錄隨 OpenCode 版本而變：v2 使用複數 `commands/`，v1（或無法偵測時）使用單數 `command/`。若兩者同時存在，都要檢查並標示實際生效者與覆蓋風險；新安裝會依偵測到的版本決定使用哪個目錄。
 
 ## 檢查項目
 

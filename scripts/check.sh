@@ -2,7 +2,7 @@
 set -euo pipefail
 
 TARGET_DIR="${1:-$HOME/.config/opencode/skills}"
-COMMAND_TARGET_DIR="${2:-$HOME/.config/opencode/command}"
+COMMAND_TARGET_DIR_OVERRIDE="${2:-}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=scripts/opencode-version.sh
@@ -12,6 +12,14 @@ if [ -n "${OPCODE_MAJOR:-}" ] && [ "$OPCODE_MAJOR" -ge 2 ]; then
   V2_MODE=1
 else
   V2_MODE=0
+fi
+
+# On OpenCode v2 verify the modern plural commands/ directory; on v1 keep the
+# legacy singular command/ directory. An explicit $2 override always wins.
+if [ "$V2_MODE" -eq 1 ]; then
+  COMMAND_TARGET_DIR="${COMMAND_TARGET_DIR_OVERRIDE:-$HOME/.config/opencode/commands}"
+else
+  COMMAND_TARGET_DIR="${COMMAND_TARGET_DIR_OVERRIDE:-$HOME/.config/opencode/command}"
 fi
 
 # workspace-layout is v1-only: on OpenCode v2 the built-in AGENTS.md mechanism

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.7 - commands/ directory is version-aware
+
+- The repo command source directory is now `commands/` (plural), matching OpenCode v2's recommendation; the singular `command/` name is retained only as the install target on OpenCode v1.x.x.
+- `install.sh` / `install.ps1` pick the command install directory by detected major: v2 → `~/.config/opencode/commands/`, v1 (or undetectable) → `~/.config/opencode/command/`. An explicit second argument still overrides.
+- `check.sh` / `check.ps1` verify the same version-specific directory.
+- Updated `manifest/skills.json` source paths, the README structure/install sections, the `teamwork-update-check` and `config-check` Skills, and `handoff.md`.
+- Bumped the manifest version to 0.2.7.
+
 ## 0.2.6 - v1-only workspace-layout and instructions
 
 - Treat `workspace-layout` (skill) and `instructions` (command) as OpenCode v1.x.x only. On v2 the built-in `AGENTS.md` mechanism replaces them, so they are no longer installed by default.

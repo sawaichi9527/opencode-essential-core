@@ -1,14 +1,14 @@
 [CmdletBinding()]
 param(
     [string]$TargetDir = (Join-Path $HOME ".config\opencode\skills"),
-    [string]$CommandTargetDir = (Join-Path $HOME ".config\opencode\command"),
+    [string]$CommandTargetDir = "",
     [switch]$Force
 )
 
 $ErrorActionPreference = "Stop"
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 $SourceDir = Join-Path $RepoRoot "skills"
-$CommandSourceDir = Join-Path $RepoRoot "command"
+$CommandSourceDir = Join-Path $RepoRoot "commands"
 
 # Components that are only meaningful on OpenCode v1.x.x. On v2 the built-in
 # AGENTS.md mechanism replaces them, so we skip installing them.
@@ -22,6 +22,16 @@ if ($OpenCodeMajor -and ([int]$OpenCodeMajor) -ge 2) {
 else {
     $V2Mode = $false
 }
+
+# On OpenCode v2 use the modern plural commands/ directory; on v1 keep the
+# legacy singular command/ directory. An explicit -CommandTargetDir override always wins.
+if ($V2Mode) {
+    $commandDirName = "commands"
+}
+else {
+    $commandDirName = "command"
+}
+$CommandTargetDir = if ($CommandTargetDir) { $CommandTargetDir } else { Join-Path $HOME ".config\opencode\$commandDirName" }
 
 function Test-OptionalOnV2 {
     param([string]$Name)

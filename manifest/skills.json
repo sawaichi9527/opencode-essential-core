@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "repository": "https://github.com/sawaichi9527/opencode-essential-core",
   "branch": "main",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "components": [
     {
       "id": "environment-check",
@@ -48,12 +48,12 @@
     {
       "id": "teamwork-update-check",
       "kind": "command",
-      "sourcePath": "command/teamwork-update-check.md"
+      "sourcePath": "commands/teamwork-update-check.md"
     },
     {
       "id": "instructions",
       "kind": "command",
-      "sourcePath": "command/instructions.md",
+      "sourcePath": "commands/instructions.md",
       "optionalOnV2": true
     }
   ]

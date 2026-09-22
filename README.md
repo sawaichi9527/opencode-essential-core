@@ -18,8 +18,8 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 AGENTS.md                    專案共用規則
 .opencode/skills/            專案限定 Skills
 ~/.config/opencode/skills/   全域共用 Skills
-.opencode/command/           專案限定 Commands
-~/.config/opencode/command/  全域共用 Commands
+.opencode/commands/          專案限定 Commands（v2）；v1 為 `.opencode/command/`
+~/.config/opencode/commands/ 全域共用 Commands（v2）；v1 為 `~/.config/opencode/command/`
 opencode.jsonc               OpenCode 設定與權限
 ```
 
@@ -79,7 +79,7 @@ Extension Packs 的 `hybrid-workflow` 屬於 `category: other` 的 workflow，�
 
 ```text
 opencode-essential-core/
-├── command/
+├── commands/
 │   ├── teamwork-update-check.md
 │   └── instructions.md
 ├── skills/
@@ -111,18 +111,18 @@ bash ./scripts/install.sh
 bash ./scripts/check.sh
 ```
 
-預設安裝到：
+預設安裝到（命令目錄依 OpenCode 版本決定）：
 
 ```text
 ~/.config/opencode/skills/
-~/.config/opencode/command/
+~/.config/opencode/commands/   # v2.x.x；v1.x.x 為 ~/.config/opencode/command/
 ```
 
 Windows 對應：
 
 ```text
 C:\Users\<user>\.config\opencode\skills\
-C:\Users\<user>\.config\opencode\command\
+C:\Users\<user>\.config\opencode\commands\   # v2.x.x；v1.x.x 為 \.config\opencode\command\
 ```
 
 安裝腳本會偵測環境中的 OpenCode 版本：在 v1.x.x 複製八個 Core Skills 與兩個 Core Commands；在 v2.x.x 跳過 `workspace-layout` 與 `instructions`（這兩個是 v1-only，v2 由內建 `AGENTS.md` 機制取代），因此只安裝七個 Skills 與一個 Command。腳本不會自動修改既有 `opencode.jsonc`，也不會安裝 Extension Packs 或第三方 plugin。檢查腳本會依版本確認對應的 Skills、Commands 與兩個 Project Init Reference 存在。
@@ -139,6 +139,8 @@ C:\Users\<user>\.config\opencode\command\
 - `install.sh` / `install.ps1` 偵測到 major ≥ 2 時，自動跳過這兩個元件。
 - `check.sh` / `check.ps1` 不再要求它們存在。
 - `/teamwork-update-check` 不會提示安裝或升級這兩個元件。
+
+Commands 的安裝／驗證目錄亦依版本決定：v2 使用 v2 推薦的複數 `commands/`，v1（或無法偵測時）維持舊式單數 `command/`，因此 `install.sh` / `install.ps1` 與 `check.sh` / `check.ps1` 都會先偵測 major 版本再決定路徑。`FORCE=1`（PowerShell 用 `-Force`）仍可在 v2 也安裝，並可傳入第二個參數強制指定命令目錄。
 
 若要強制在 v2 也安裝（例如仍想保留 Git 邊界文件），用 `FORCE=1`（PowerShell 用 `-Force`）。這兩個元件在 manifest 中以 `optionalOnV2: true` 標記，偵測方式與安裝／檢查腳本一致：優先 `opencode --version`，退回查桌面版 CLI 路徑。
 
