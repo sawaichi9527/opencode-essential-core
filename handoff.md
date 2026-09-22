@@ -7,7 +7,7 @@
 | 項目 | 值 |
 |---|---|
 | 版本 | `2.0.12`（`VERSION` / `manifest/skills.json`；版號 = 該次檢討時所基於驗證的 OpenCode 版本） |
-| 分支 | `main`（PR #4 已合併為 `1430e01`） |
+| 分支 | `main`（HEAD `d855b04`；PR #3 已關閉由 #4 取代、PR #4 已合併） |
 | 相容性 | **僅支援 OpenCode v2.x.x**，v1 相容已於 2.0.12 移除 |
 
 ## 專案定位
@@ -31,10 +31,11 @@ Core 只保留多數使用者的共通能力，不綁定特定公司、部門或
 
 ## 最近變更（0.2.8 → 2.0.12）
 
-1. **2.0.12（9/22）**：移除 v1 相容、改為僅支援 v2——刪除 `/instructions` command 與 `opencode-version.*` 偵測腳本、移除 manifest `optionalOnV2`；保留 `workspace-layout`（多 repo 邊界指引），其規則載入段改寫為 v2 原生做法（workspace 級規則放全域 `AGENTS.md`）。版本編號方案改為「版號 = 該次檢討時基於驗證的 OpenCode 版本」（本次為 2.0.12）；OpenCode 單純發版不觸發 pack 升版，下次檢討時再依當時 OpenCode 版本賦予新號。
-2. **0.2.8**：`project-init` 收斂為新建專案；既有專案改用 v2 內建 `/init`。
-3. **0.2.7**：command 源目錄改複數 `commands/`，安裝路徑依偵測版本決定。
-4. **0.2.6**：`workspace-layout`／`instructions` 標記 `optionalOnV2`（v1-only，2.0.12 已移除該機制）。
+1. **2.0.12 後續修正（9/22）**：升版至 2.0.12 與版本編號方案澄清（版號 = 該次檢討時基於驗證的 OpenCode 版本）；`workspace-layout` 規則載入段與 `git-basic` 權限對照依 v2 官方文件修正（規則為 cwd→home 方向全合併、權限 action 用 `shell`、補 `external_directory` 說明）；README 開頭重寫為純 v2 定位；本機已建立 `forgejo` remote 完成三方同步。
+2. **2.0.12（9/22）**：移除 v1 相容、改為僅支援 v2——刪除 `/instructions` command 與 `opencode-version.*` 偵測腳本、移除 manifest `optionalOnV2`；保留 `workspace-layout`（多 repo 邊界指引），其規則載入段改寫為 v2 原生做法（workspace 級規則放全域 `AGENTS.md`）。
+3. **0.2.8**：`project-init` 收斂為新建專案；既有專案改用 v2 內建 `/init`。
+4. **0.2.7**：command 源目錄改複數 `commands/`，安裝路徑依偵測版本決定。
+5. **0.2.6**：`workspace-layout`／`instructions` 標記 `optionalOnV2`（v1-only，2.0.12 已移除該機制）。
 
 ## 目前 Command / Skill 對應
 
@@ -44,7 +45,7 @@ Core 只保留多數使用者的共通能力，不綁定特定公司、部門或
 ## 發布與驗證
 
 - 變更流程慣例：改動時同步更新 `VERSION`、`manifest/skills.json`、`CHANGELOG.md`、README 與相關 Skill / Command 文件，再執行 `scripts/check.ps1`（Windows）或 `check.sh`（Bash）驗證八個 Skills、一個 Command 與 Project Init References。
-- 三方同步慣例：本地 `main` = GitHub `origin/main` = Forgejo `forgejo/main`，任一方前進後同步其餘兩方。
+- 三方同步慣例：本地 `main` = GitHub `origin/main` = Forgejo `forgejo/main`，任一方前進後同步其餘兩方。本機已設定 `origin` 與 `forgejo` 兩個 remote；憑證存於本機 credential store（`~/.git-credentials`），不入 repo、不寫入任何追蹤檔案。
 
 ## 待辦 / 注意事項
 
