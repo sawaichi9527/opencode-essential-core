@@ -4,6 +4,19 @@ param(
     [string]$CommandTargetDir = (Join-Path $HOME ".config\opencode\command")
 )
 
+$RepoRoot = Split-Path -Parent $PSScriptRoot
+
+. (Join-Path $PSScriptRoot "opencode-version.ps1")
+$OpenCodeMajor = Get-OpenCodeMajorVersion
+if ($OpenCodeMajor -and ([int]$OpenCodeMajor) -ge 2) {
+    $V2Mode = $true
+}
+else {
+    $V2Mode = $false
+}
+
+# workspace-layout is v1-only: on OpenCode v2 the built-in AGENTS.md mechanism
+# replaces it, so it is not expected to be installed.
 $Expected = @(
     "environment-check",
     "config-check",
@@ -11,7 +24,6 @@ $Expected = @(
     "session-start",
     "session-close",
     "git-basic",
-    "workspace-layout",
     "teamwork-update-check"
 )
 
@@ -26,10 +38,16 @@ foreach ($Name in $Expected) {
     }
 }
 
-$CommandFiles = @(
-    "teamwork-update-check.md",
-    "instructions.md"
-)
+if ($V2Mode) {
+    # instructions is v1-only; skip it on v2.
+    $CommandFiles = @("teamwork-update-check.md")
+}
+else {
+    $CommandFiles = @(
+        "teamwork-update-check.md",
+        "instructions.md"
+    )
+}
 foreach ($CommandName in $CommandFiles) {
     $CommandFile = Join-Path $CommandTargetDir $CommandName
     if (Test-Path $CommandFile) {

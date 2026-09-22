@@ -50,6 +50,14 @@ description: 手動檢查 sawaichi9527 的 OpenCode Core 與 Extension Packs 更
 
 plugin 版本更新的判讀：比較最新 manifest 中該 Pack 的 `release` 或 `package` 欄位，與本機安裝基準記錄的固定版本。兩者不同即代表有可用的 plugin 版本更新。
 
+## 版本相容（optionalOnV2）
+
+manifest 中有 `optionalOnV2: true` 的元件（目前為 `workspace-layout` skill 與 `instructions` command）只在 OpenCode v1.x.x 有意義；v2 由內建 `AGENTS.md` 機制取代。偵測方式與安裝／檢查腳本一致：優先 `opencode --version`，退回查桌面版 CLI 路徑。
+
+- 若本機 OpenCode major ≥ 2：把這些元件視為「不適用於本環境」。不要在差異報告裡把它列為 `ADDED`／`REMOVED`，也不要提示安裝或升級；套用階段直接跳過。
+- 若 major < 2（v1）或無法偵測：正常處理這些元件。
+- 無法偵測版本時，預設按 v1 處理（保留這些元件），並提示使用者版本未能確認。
+
 ## Baseline 建議格式（schemaVersion 2）
 
 ```json

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.6 - v1-only workspace-layout and instructions
+
+- Treat `workspace-layout` (skill) and `instructions` (command) as OpenCode v1.x.x only. On v2 the built-in `AGENTS.md` mechanism replaces them, so they are no longer installed by default.
+- `install.sh` / `install.ps1` now detect the consuming OpenCode major version (`scripts/opencode-version.sh` / `opencode-version.ps1`) and skip these components when major ≥ 2.
+- `check.sh` / `check.ps1` no longer require them on v2 (they still do on v1).
+- `teamwork-update-check` skips `optionalOnV2` components instead of reporting them as updates.
+- Marked both components `optionalOnV2: true` in `manifest/skills.json`; `FORCE=1` / `-Force` still installs them on v2.
+- Documented the v1/v2 split in the README.
+
 ## 0.2.5 - /instructions command
 
 - Renamed the companion command of the `workspace-layout` Skill from `/instruction` to `/instructions`, matching the command the team already used locally.

@@ -6,7 +6,7 @@ OpenCode 的跨平台必要核心，目標是讓小型開發團隊在 Windows、
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v0.2.5。內容源自
+> 狀態：v0.2.6。內容源自
 > `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 但只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -47,7 +47,7 @@ opencode.jsonc               OpenCode 設定與權限
 | `session-start` | 開始工作前讀取規則、交接與 Git 狀態 |
 | `session-close` | 整理本次工作、最新驗證證據、交接與 Git 變更 |
 | `git-basic` | 統一安全且可理解的本地 Git 操作 |
-| `workspace-layout` | 多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo）；隨附 `/instructions` command |
+| `workspace-layout` | 多 repo workspace 的層級判斷與 repo 邊界（讀可跨、寫單一 repo）；隨附 `/instructions` command（**v1-only**） |
 | `teamwork-update-check` | 手動比對團隊 Core 與 Extension Packs repository 的版本與變更，套用前詢問使用者 |
 
 ## Commands
@@ -65,7 +65,7 @@ Core 提供兩個手動 command：
 新增與移除的元件、CHANGELOG 與相容性要求，通知差異並在確認後才升級。
 它不會由 `session-start` 自動觸發，也不會在未獲得確認前修改本機設定或安裝套件。
 
-`/instructions` 是 `workspace-layout` Skill 的搭配 command，與該 Skill 一起安裝。它會依 OpenCode
+`/instructions` 是 `workspace-layout` Skill 的搭配 command，與該 Skill 一起安裝（**僅限 OpenCode v1.x.x**）。它會依 OpenCode
 實際的載入規則列出目前生效的 instruction 來源——專案 `AGENTS.md` 由 cwd 往上搜尋但**上界是
 worktree（git root）**，而 `instructions` 欄位是額外附加、不被專案 `AGENTS.md` 遮蔽——並標明生效的
 `worktree`。若上層 workspace 規則未被載入，它會顯示要加入 `~/.config/opencode/opencode.jsonc`
@@ -125,7 +125,22 @@ C:\Users\<user>\.config\opencode\skills\
 C:\Users\<user>\.config\opencode\command\
 ```
 
-安裝腳本複製八個 Core Skills 與兩個 Core Commands，但不會自動修改既有 `opencode.jsonc`，也不會安裝 Extension Packs 或第三方 plugin。檢查腳本會確認八個 Core Skills、兩個 Core Commands 與兩個 Project Init Reference 存在。
+安裝腳本會偵測環境中的 OpenCode 版本：在 v1.x.x 複製八個 Core Skills 與兩個 Core Commands；在 v2.x.x 跳過 `workspace-layout` 與 `instructions`（這兩個是 v1-only，v2 由內建 `AGENTS.md` 機制取代），因此只安裝七個 Skills 與一個 Command。腳本不會自動修改既有 `opencode.jsonc`，也不會安裝 Extension Packs 或第三方 plugin。檢查腳本會依版本確認對應的 Skills、Commands 與兩個 Project Init Reference 存在。
+
+## 版本相容性（OpenCode v1 vs v2）
+
+`workspace-layout` Skill 與 `/instructions` Command 設計上僅供 OpenCode **v1.x.x**：
+
+- v1 的 `instructions` 設定欄位會實際載入檔案，`CLAUDE.md` 也是 `AGENTS.md` 的備用來源。
+- v2 的 `instructions` 欄位目前不會解析、也不把 `CLAUDE.md` 當備用；專案規則改用內建的 `AGENTS.md` 機制。
+
+因此在 v2 環境：
+
+- `install.sh` / `install.ps1` 偵測到 major ≥ 2 時，自動跳過這兩個元件。
+- `check.sh` / `check.ps1` 不再要求它們存在。
+- `/teamwork-update-check` 不會提示安裝或升級這兩個元件。
+
+若要強制在 v2 也安裝（例如仍想保留 Git 邊界文件），用 `FORCE=1`（PowerShell 用 `-Force`）。這兩個元件在 manifest 中以 `optionalOnV2: true` 標記，偵測方式與安裝／檢查腳本一致：優先 `opencode --version`，退回查桌面版 CLI 路徑。
 
 ## OpenCode 專案規則
 

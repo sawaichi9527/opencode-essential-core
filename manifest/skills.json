@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "repository": "https://github.com/sawaichi9527/opencode-essential-core",
   "branch": "main",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "components": [
     {
       "id": "environment-check",
@@ -37,7 +37,8 @@
     {
       "id": "workspace-layout",
       "kind": "skill",
-      "sourcePath": "skills/workspace-layout"
+      "sourcePath": "skills/workspace-layout",
+      "optionalOnV2": true
     },
     {
       "id": "teamwork-update-check",
@@ -52,7 +53,8 @@
     {
       "id": "instructions",
       "kind": "command",
-      "sourcePath": "command/instructions.md"
+      "sourcePath": "command/instructions.md",
+      "optionalOnV2": true
     }
   ]
 }
