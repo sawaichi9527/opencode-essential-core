@@ -11,7 +11,7 @@ function Get-OpenCodeMajorVersion {
 
     $major = $null
 
-    # 1) opencode on PATH
+    # 1. opencode on PATH
     $cmd = Get-Command opencode -ErrorAction SilentlyContinue
     if ($cmd) {
         try {
@@ -23,7 +23,7 @@ function Get-OpenCodeMajorVersion {
         catch { }
     }
 
-    # 2) desktop-bundled CLI (e.g. %USERPROFILE%\.config\ai.opencode.desktop\cli\2.0.12\)
+    # 2. Desktop-bundled CLI, e.g. %USERPROFILE%\.config\ai.opencode.desktop\cli\2.0.12\
     if (-not $major) {
         $cliBase = Join-Path $HOME '.config\ai.opencode.desktop\cli'
         if (Test-Path $cliBase) {
