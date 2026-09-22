@@ -27,7 +27,7 @@ description: 手動檢查 sawaichi9527 的 OpenCode Core 與 Extension Packs 更
 2. 讀取本機安裝基準；優先檢查：
    - `~/.config/opencode/teamwork-install-state.json`
    - 全域 Skills、Commands 與 `opencode.jsonc`
-   - 專案 `.opencode/skills/` 與 `.opencode/command/`
+   - 專案 `.opencode/skills/` 與 `.opencode/commands/`
 3. 若沒有安裝基準：視為首次安裝。依 Extension Packs manifest 列出 `default`、`recommended`、`optional` 三層 Pack，並顯示 Pack 的 `category`（`category: other` 不視為新的 tier）。將 `defaultPacks` 標為建議預選，但仍詢問使用者。
 4. 若已有安裝基準：依「版本比對規則」計算 Core 與 Extension Packs 的差異，包括已安裝 skill 與已選 plugin 的版本更新。
 5. 依「通知與升級詢問」呈現差異並取得確認；套用後更新安裝基準。
@@ -50,6 +50,10 @@ description: 手動檢查 sawaichi9527 的 OpenCode Core 與 Extension Packs 更
 
 plugin 版本更新的判讀：比較最新 manifest 中該 Pack 的 `release` 或 `package` 欄位，與本機安裝基準記錄的固定版本。兩者不同即代表有可用的 plugin 版本更新。
 
+## 版本要求
+
+Core 僅支援 OpenCode v2.x.x。若本機 OpenCode major < 2 或無法確認，在差異報告中標示 `COMPATIBILITY`，提醒本套件不適用於該版本；不要因此停用唯讀檢查。
+
 ## Baseline 建議格式（schemaVersion 2）
 
 ```json
@@ -66,10 +70,11 @@ plugin 版本更新的判讀：比較最新 manifest 中該 Pack 的 `release` �
       "session-start": "skills/session-start",
       "session-close": "skills/session-close",
       "git-basic": "skills/git-basic",
+      "workspace-layout": "skills/workspace-layout",
       "teamwork-update-check": "skills/teamwork-update-check"
     },
     "commands": {
-      "teamwork-update-check": "command/teamwork-update-check.md"
+      "teamwork-update-check": "commands/teamwork-update-check.md"
     }
   },
   "extensionPacks": {
@@ -88,6 +93,8 @@ plugin 版本更新的判讀：比較最新 manifest 中該 Pack 的 `release` �
 ```
 
 `schemaVersion` 1 的舊基準可沿用：升級時以目前安裝的 components 與已選 plugin 的固定版本填補新欄位。不要把 access token 或私人 URL 寫入此檔案。
+
+commands 路徑固定記錄為 `commands/<name>.md`（OpenCode v2 的複數目錄）。若舊基準記錄的是 v1 的 `command/<name>.md`，升級時改為 `commands/`；此類僅因目錄名而異的差異視為正常而非 `CHANGED`。
 
 ## 通知與升級詢問
 

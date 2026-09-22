@@ -2,12 +2,16 @@
 set -euo pipefail
 
 TARGET_DIR="${1:-$HOME/.config/opencode/skills}"
-COMMAND_TARGET_DIR="${2:-$HOME/.config/opencode/command}"
+COMMAND_TARGET_DIR_OVERRIDE="${2:-}"
 FORCE="${FORCE:-0}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 SOURCE_DIR="$REPO_ROOT/skills"
-COMMAND_SOURCE_DIR="$REPO_ROOT/command"
+COMMAND_SOURCE_DIR="$REPO_ROOT/commands"
+
+# This pack targets OpenCode v2 only. Commands install to the plural
+# commands/ directory; an explicit $2 override always wins.
+COMMAND_TARGET_DIR="${COMMAND_TARGET_DIR_OVERRIDE:-$HOME/.config/opencode/commands}"
 
 mkdir -p "$TARGET_DIR"
 

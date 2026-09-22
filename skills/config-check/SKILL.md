@@ -9,14 +9,14 @@ description: 檢查 OpenCode 全域與專案域設定、Skill／Command 位置�
 
 - 全域設定：`~/.config/opencode/opencode.jsonc`
 - 全域 Skills：`~/.config/opencode/skills/`
-- 全域 Commands：`~/.config/opencode/command/`
+- 全域 Commands：`~/.config/opencode/commands/`
 - 專案設定：專案根目錄的 OpenCode 設定
 - 專案 Skills：`<project>/.opencode/skills/`
-- 專案 Commands：`<project>/.opencode/command/`
+- 專案 Commands：`<project>/.opencode/commands/`
 
 Windows 的 `~` 對應目前使用者家目錄，不要假設一定在 Documents。
 
-若同時存在 `command/` 與舊式 `commands/`，兩者都要檢查並標示實際生效者與覆蓋風險；新安裝預設使用單數 `command/`。
+Commands 目錄固定為複數 `commands/`。若發現舊式單數 `command/` 目錄，標示為過時並提示其內容不會被 v2 載入；若兩者同時存在，都要檢查並標示實際生效者與覆蓋風險。
 
 ## 檢查項目
 
@@ -28,7 +28,9 @@ Windows 的 `~` 對應目前使用者家目錄，不要假設一定在 Documents
 6. `project-init` 是否包含 `references/AGENTS.template.md` 與 `references/handoff.template.md`。
 7. 是否把 Token、密碼或私鑰直接寫入設定、Skill 或 Command。
 8. Windows 與 WSL 是否誤用彼此的執行檔或虛擬環境。
-9. 只提出修改建議；修改前先顯示差異並取得同意。
+9. MCP server 是否配置正常且可連線（`opencode mcp ls`）。
+10. Agent 是否配置正常（`opencode agent list`）。
+11. 只提出修改建議；修改前先顯示差異並取得同意。
 
 ## 輸出
 
