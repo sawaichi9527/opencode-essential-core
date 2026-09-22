@@ -8,11 +8,15 @@ description: 檢查 OpenCode 全域與專案域設定、Skill／Command 位置�
 ## 檢查位置
 
 - 全域設定：`~/.config/opencode/opencode.jsonc`
-- 全域 Skills：`~/.config/opencode/skills/`
+- 全域 Skills（原生）：`~/.config/opencode/skills/`
+- 全域 Skills（相容）：`~/.agents/skills/`、`~/.claude/skills/`
 - 全域 Commands：`~/.config/opencode/commands/`
 - 專案設定：專案根目錄的 OpenCode 設定
-- 專案 Skills：`<project>/.opencode/skills/`
+- 專案 Skills（原生）：`<project>/.opencode/skills/`
+- 專案 Skills（相容）：`<project>/.agents/skills/`、`<project>/.claude/skills/`
 - 專案 Commands：`<project>/.opencode/commands/`
+
+OpenCode 會依序搜尋原生與相容目錄，同名 Skill 以後註冊者為準；檢查同一個 Skill 是否同時存在於多處，並標示實際生效者與覆蓋風險。
 
 Windows 的 `~` 對應目前使用者家目錄，不要假設一定在 Documents。
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.13-dev - Unreleased
+
+- Documented the full OpenCode v2 skill discovery set: the native global `~/.config/opencode/skills/` and project `.opencode/skills/`, plus the compatibility `~/.agents/skills/` and `.agents/skills/` (where `npx skills add -g -a opencode` installs). Updated the README "OpenCode 使用邊界" and 安裝 sections; `config-check` now lists and checks the compatibility directories and flags duplicate IDs across sources.
+- Removed the stale `hybrid-workflow` description from the README (that pack was removed in Extension Packs 2.0.12).
+- Bumped the version to `2.0.13-dev` (development; not yet validated against a released OpenCode version).
+
 ## 2.0.12 - OpenCode v2 only, v1 compatibility removed
 
 - Version scheme changed: the pack version now records the OpenCode version this release was validated against (2.0.12), instead of the previous 0.x line. The pack does not bump just because OpenCode released a new version; the next review round of this pack will adopt the OpenCode version current at that time.

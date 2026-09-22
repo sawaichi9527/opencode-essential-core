@@ -7,7 +7,7 @@ OpenCode **v2.x.x** 專用的跨平台必要核心套件：以 8 個 Skills 與 
 本專案以 SWQA 自動化開發作為主要驗證場景，但核心內容不綁定公司、部門或特定測試框架，
 也可供 SWRD 與個人專案使用。
 
-> 狀態：v2.0.12（基於 OpenCode v2.0.12 驗證），**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 2.0.12 移除，詳見 [CHANGELOG](CHANGELOG.md)。
+> 狀態：v2.0.13-dev（開發中、未發布；上一版 v2.0.12 基於 OpenCode v2.0.12 驗證），**僅支援 OpenCode v2.x.x**；v1 相容（版本偵測、`instructions` 欄位、單數 `command/` 目錄）已於 2.0.12 移除，詳見 [CHANGELOG](CHANGELOG.md)。
 > 內容源自 `mathruffian-dot/opencode-lazy-packs` 的概念，並參考成熟的 AI Coding 精簡修改與驗證原則，
 > 只保留適合 OpenCode 小型團隊使用的部分。
 
@@ -16,12 +16,14 @@ OpenCode **v2.x.x** 專用的跨平台必要核心套件：以 8 個 Skills 與 
 本 Repository 專門服務 OpenCode 開發流程，主要使用 OpenCode 原生機制：
 
 ```text
-AGENTS.md                    專案共用規則
-.opencode/skills/            專案限定 Skills
-~/.config/opencode/skills/   全域共用 Skills
-.opencode/commands/          專案限定 Commands
-~/.config/opencode/commands/ 全域共用 Commands
-opencode.jsonc               OpenCode 設定與權限
+AGENTS.md                     專案共用規則
+.opencode/skills/             專案限定 Skills（原生）
+.agents/skills/               專案限定 Skills（相容）
+~/.config/opencode/skills/    全域共用 Skills（原生）
+~/.agents/skills/             全域共用 Skills（相容）
+.opencode/commands/           專案限定 Commands
+~/.config/opencode/commands/  全域共用 Commands
+opencode.jsonc                OpenCode 設定與權限
 ```
 
 不會自動建立或安裝 Claude Code Plugin、Codex Plugin、Cursor Rules、跨 Agent Hook 或模式狀態管理。
@@ -65,9 +67,7 @@ Core 提供一個手動 command：
 新增與移除的元件、CHANGELOG 與相容性要求，通知差異並在確認後才升級。
 它不會由 `session-start` 自動觸發，也不會在未獲得確認前修改本機設定或安裝套件。
 
-Extension Packs 的 `hybrid-workflow` 屬於 `category: other` 的 workflow，包含泛用
-`workflow_local_builder`、team 28500 專用的 `workflow_local_builder_aeon`，以及導入時選擇雲端模型的
-`workflow_cloud_cheap_builder`。Core 只列出並檢查這些資訊，不依賴任何特定 provider、GPU 或 Extension Pack。
+Extension Packs 的選用能力（如 `local-llm-dispatch-policy`、SWQA、Browser、Forgejo／GitHub 整合等）由 Extension Packs 自行維護清單與版本；Core 只透過 `/teamwork-update-check` 讀取並比對，不依賴任何特定 provider、GPU 或 Extension Pack。原 `hybrid-workflow` 已於 Extension Packs 2.0.12 移除。
 
 ## Repository 結構
 
@@ -104,12 +104,14 @@ bash ./scripts/install.sh
 bash ./scripts/check.sh
 ```
 
-預設安裝到：
+預設安裝到（原生目錄）：
 
 ```text
 ~/.config/opencode/skills/
 ~/.config/opencode/commands/
 ```
+
+OpenCode v2 也會自動搜尋相容目錄 `~/.agents/skills/`（全域）與 `.agents/skills/`（專案）；若改用 `npx skills add -g -a opencode` 安裝第三方 Skill，實際落點會是 `~/.agents/skills/`。同名 Skill 以後註冊者為準，請避免兩處同名。
 
 Windows 對應：
 
