@@ -1,6 +1,6 @@
 # handoff.md — OpenCode Essential Core
 
-> 供接手 Session 閱讀的現況摘要。更新時間：2026-09-22
+> 供接手 Session 閱讀的現況摘要。更新時間：2026-09-23
 
 ## 目前狀態
 
@@ -40,13 +40,14 @@ Core 只保留多數使用者的共通能力，不綁定特定公司、部門或
 
 ## 目前 Command / Skill 對應
 
-- Eight Core Skills、one Core Command（`/teamwork-update-check`）安裝至 `~/.config/opencode/skills/` 與 `~/.config/opencode/commands/`（一律 v2 路徑）。
+- Eight Core Skills、six Core Commands 安裝至 `~/.config/opencode/skills/` 與 `~/.config/opencode/commands/`（一律 v2 路徑）。
 - `/teamwork-update-check` 讀取本 repo `main` 的 `manifest/skills.json` 與 Extension Packs 的 `manifest/packs.json` 作為更新比對來源；不由 `session-start` 自動觸發。
 
 ## 發布與驗證
 
+- `v2.0.14` 已於 2026-09-23 發布：GitHub 與 Forgejo 皆有 `v2.0.14` release（notes 取自 CHANGELOG 2.0.14），annotated tag `v2.0.14` → `7079a11`，三方 tag 一致。
 - `v2.0.12` 已於 2026-09-22 發布：GitHub 與 Forgejo 皆有 `v2.0.12` release（notes 取自 CHANGELOG 2.0.12），annotated tag `v2.0.12` → `516d103`，三方 tag 一致；此為本 repo 首次發 release。
-- 變更流程慣例：改動時同步更新 `VERSION`、`manifest/skills.json`、`CHANGELOG.md`、README 與相關 Skill / Command 文件，再執行 `scripts/check.ps1`（Windows）或 `check.sh`（Bash）驗證八個 Skills、一個 Command 與 Project Init References。
+- 變更流程慣例：改動時同步更新 `VERSION`、`manifest/skills.json`、`CHANGELOG.md`、README 與相關 Skill / Command 文件，再執行 `scripts/check.ps1`（Windows）或 `check.sh`（Bash）驗證八個 Skills、六個 Commands 與 Project Init References。
 - 三方同步慣例：本地 `main` = GitHub `origin/main` = Forgejo `forgejo/main`，任一方前進後同步其餘兩方。本機已設定 `origin` 與 `forgejo` 兩個 remote；憑證存於本機 credential store（`~/.git-credentials`），不入 repo、不寫入任何追蹤檔案。
 
 ## 待辦 / 注意事項
